@@ -2,6 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import SignUp from '../views/SignUp.vue'
 import LogIn from '../views/LogIn.vue'
+import MyAccount from '../views/MyAccount'
+import store from '../store'
+
 
 const routes = [
   {
@@ -27,11 +30,26 @@ const routes = [
     name: 'SignUp',
     component: SignUp
   },
+  {
+    path: '/my-account',
+    name: 'MyAccount',
+    component: MyAccount,
+    meta:{
+      requireLogin: true
+    }
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+router.beforeEach((to, from, next)=>{
+  if(to.matched.some(record=> record.meta.requiredLogin)&&!store.state.isAuthenticated){
+    next({name: 'LogIn', query:{to: to.path}});
+  }else{
+    next()
+  }
 })
 
 export default router
