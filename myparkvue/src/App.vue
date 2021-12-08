@@ -15,7 +15,7 @@
           <router-link to="/winter" class="navbar-item">Winter</router-link>
           <div class="navbar-item">
             <div class="buttons">
-              <template v-if="$store.state.isAuthenicated">
+              <template v-if="$store.state.token">
                 <router-link to="/my-account" class="button is-light">My Account</router-link>
               </template>
               <template v-else>
@@ -33,6 +33,7 @@
     <section class="section">
       <router-view/>
     </section>
+    
     <footer class="footer">
       <p class="has-text-centered">Copyright (c) 2021</p>
     </footer>
@@ -41,6 +42,7 @@
 
 <script>
 import axios from 'axios'
+
 export default{
   data() {
     return{
@@ -48,9 +50,9 @@ export default{
     }
   },
   beforeCreate(){
-    this.$store.commit('initializeStore')
-
+    this.$store.commit('initializeStore') 
     const token = this.$store.state.token
+    console.log(token)
     if(token){
       axios.defaults.headers.common['Authorization']="Token " + token
     }else{

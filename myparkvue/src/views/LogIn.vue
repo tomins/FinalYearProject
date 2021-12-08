@@ -20,7 +20,7 @@
                 </div>
                 <div class="field">
                     <div class="control">
-                        <button class="button is-dark">Sign Up</button>
+                        <button class="button is-dark">Log in</button>
                     </div>
                 </div>
                 <hr>
@@ -51,26 +51,29 @@ export default{
             localStorage.removeItem("token")
 
             const formData= {
-                username: this.username,
-                password: this.password
+                password: this.password,
+                username: this.username
             }
             await axios
-                .post("/api/v1/token/login/",formData)
-                .then(response=> {
-                    const token = response.data.auth.token
+                .post("/api/v1/token/login/", formData)
+                .then(response => {
+                    const token = response.data.auth_token
+                    
                     this.$store.commit('setToken', token)
-                    axios.defults.headers.common['Authorization'] = "Token " + token
+                    
+                    axios.defaults.headers.common["Authorization"] = "Token " + token
                     localStorage.setItem("token", token)
-                    const toPath = this.$route.query.to || '/'
+                    const toPath = '/'
                     this.$router.push(toPath)
                 })
-                .catch(error =>{
-                    if(error.response){
-                        for(const property in error.response.data){
+                .catch(error => {
+                    if (error.response) {
+                        for (const property in error.response.data) {
                             this.errors.push(`${property}: ${error.response.data[property]}`)
                         }
-                    }else{
-                        this.errors.push('Something went wrong!')
+                    } else {
+                        this.errors.push('Something went wrong. Please try again')
+                        
                         console.log(JSON.stringify(error))
                     }
                 })

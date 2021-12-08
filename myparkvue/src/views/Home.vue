@@ -9,8 +9,17 @@
           The best parking app on the web!
         </p>
       </div>
+      <div>
+       <GoogleMap />
+      </div>
     </section>
-    <div class="columns is-multiline">
+    
+     
+   
+
+
+
+    <!-- <div class="columns is-multiline">
       <div class="column is-12">
         <h2 class="is-size-2 has-text-centered"> Latest Products</h2>
       </div>
@@ -27,21 +36,25 @@
           View details
         </div>
       </div>
+    
     </div>
+      -->
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-
+import GoogleMap from '@/components/GoogleMap.vue'
 export default {
   name: 'Home',
   data(){
     return {
-      latestProducts: []
+
+      //latestProducts: []
     }
   },
   components: {
+    GoogleMap
   },
   mounted(){
     this.getLatestProducts()

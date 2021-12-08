@@ -50,6 +50,9 @@ export default{
             errors: []
         }
     },
+    mounted(){
+        document.title = 'Sign Up | MyPark'
+    },
     methods:{
         submitForm(){
             this.errors = []
@@ -62,7 +65,7 @@ export default{
             if(this.password!==this.password2){
                 this.errors.push('The passwords don\'t match')
             }
-            if(!thiserrors.length){
+            if(!this.errors.length){
                 const formData={
                     username: this.username,
                     password: this.password
