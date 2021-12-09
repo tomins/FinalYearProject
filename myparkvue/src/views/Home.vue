@@ -9,10 +9,13 @@
           The best parking app on the web!
         </p>
       </div>
-      <div>
-       <GoogleMap />
-      </div>
     </section>
+    <div class="columns is-centered is-mobile">
+      <div class="column is-half is-offset-3">
+       <Search> </Search>
+       </div>
+    </div>
+    
     
      
    
@@ -45,6 +48,7 @@
 <script>
 import axios from 'axios'
 import GoogleMap from '@/components/GoogleMap.vue'
+import Search from '@/components/Search.vue'
 export default {
   name: 'Home',
   data(){
@@ -54,7 +58,8 @@ export default {
     }
   },
   components: {
-    GoogleMap
+    GoogleMap, 
+    Search
   },
   mounted(){
     this.getLatestProducts()
