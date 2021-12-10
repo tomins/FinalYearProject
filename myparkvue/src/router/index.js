@@ -4,6 +4,7 @@ import SignUp from '../views/SignUp.vue'
 import LogIn from '../views/LogIn.vue'
 import MyAccount from '../views/MyAccount'
 import store from '../store'
+import LocationSearch from '../views/LocationSearch'
 
 
 const routes = [
@@ -24,6 +25,11 @@ const routes = [
     path: '/log-in',
     name: 'LogIn',
     component: LogIn
+  },
+  {
+    path: '/LocationSearch',
+    name: 'LocationSearch',
+    component: LocationSearch
   },
   {
     path: '/sign-up',

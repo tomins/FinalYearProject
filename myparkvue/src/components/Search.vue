@@ -1,15 +1,17 @@
 <template>
-    <div class="field has-addons">
-        <div class="control has-icons-left">
-            <input type="text" class="input is-large" placeholder="Search Address" ref="location">
-            <span class="icon is-left">
-                <i class="fas fa-search"></i>
-            </span>
+    <form method="get" action="/LocationSearch">
+        <div class="field has-addons">
+            <div class="control has-icons-left">
+                <input name="location" type="text" class="input is-large" placeholder="Search Address" ref="location">
+                <span class="icon is-left">
+                    <i class="fas fa-search"></i>
+                </span>
+            </div>
+            <div class="control">
+            <button class="button is-primary is-large">Search</button>
+            </div>
         </div>
-        <div class="control">
-        <button class="button is-primary is-large">Search</button>
-        </div>
-    </div>
+    </form>
 </template>
 
 <script>
