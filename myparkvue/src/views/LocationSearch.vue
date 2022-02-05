@@ -29,7 +29,7 @@
                 this.performSearch()
             }
             else{
-                console.log("I am in the Location Search: the quey was blank")
+                console.log("I am in the Location Search: the query was blank")
             }
         },
         methods:{

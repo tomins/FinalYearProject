@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'djoser',
     'product',
     'location',
+    'ParkingZone',
 ]
 
 CORS_ALLOWED_ORIGINS = [
