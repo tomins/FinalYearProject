@@ -1,8 +1,11 @@
+from http.client import ImproperConnectionState
 from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup
 import re
-import ParkingZone
+from ParkingZone.models import ParkingZone
+from django.db import models
+import json
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -47,19 +50,20 @@ def getParkingZoneQ():
     #This ends getting the list of links for each parking area, so now going to go through each one and add it to a model
 
     ##now create all variables needed
-    nameA = ""
-    addressA =""
-    ratesA = {}
-    openingHoursA = {}
-    servicesA = []
-    securityA = []
-    numSpacesA = 0
-    heightA = 0 
-    evSpacesA = 0
-    disabledBaysA = 0
-    postcodeA = ""
+    
 
     for x in p:
+        nameA = ""
+        addressA =""
+        ratesA = {}
+        openingHoursA = {}
+        servicesA = []
+        securityA = []
+        numSpacesA = 0
+        heightA = 0 
+        evSpacesA = 0
+        disabledBaysA = 0
+        postcodeA = ""
         x = "https://www.q-park.co.uk" + x #this makes x a full link not just partial
         req = requests.get(x)
         s = BeautifulSoup(req.text, 'html.parser')
@@ -68,17 +72,22 @@ def getParkingZoneQ():
         for y in s.find_all('div',"card-meta-information parkingDetailCard-meta"):
             for n  in y.find_all('strong'):
                 nameA = n.get_text(strip=True)#Strip means take away all whitespace at start and end of the string"
-            addressA = addressA + y.get_text(strip=True)
-        postcode = addressA.split("london",1)[1]
-        postcode = postcode.split(" ")[0]
+            addressA = addressA + " " +  y.get_text(strip=True)
+            
+        postcodeA = addressA.split("London",1)[1]
+        postcodeA = postcodeA.split(" ",2)[1]
         #end name, address and postcode
 
         #rates
+        ratehours = []
+        ratecost = []
         for t in s.find_all('div',"tariff-content-row"):
             for n in t.find_all('span',"grey"):
-                ratesA["hours"] = n.get_text(strip = True)
+                ratehours.append(n.get_text(strip = True))
             for n in t.find_all('span',"large-text"):
-                ratesA["cost"] = n.get_text(strip=True)
+                ratecost.append(n.get_text(strip=True))
+        ratesA["hours"] = ratehours
+        ratesA["cost"] = ratecost
         #end rates
 
         #opening hours
@@ -106,17 +115,17 @@ def getParkingZoneQ():
         #spaces, disabledBays, ev, height
         for t in s.find_all('div',"facility-card-element"):
             for n in t.find_all(attrs={"data-notice":"Standard parking spaces"}):
-                numSpacesA = n.get_text(strip = True)
+                numSpacesA = t.get_text(strip=True)
             for n in t.find_all(attrs={"data-notice":"Blue badge parking spaces"}):
-                disabledBaysA = n.get_text(strip = True)
+                disabledBaysA = t.get_text(strip=True)
             for n in t.find_all(attrs={"data-notice":"EV charging parking spaces"}):
-                evSpacesA = n.get_text(strip = True)
+                evSpacesA =t.get_text(strip=True)
             for n in t.find_all(attrs={"data-notice":"Max. height"}):
-                heightA = n.get_text(strip = True)
+                heightA = t.get_text(strip=True)
         #end spaces, disabledBays, ev, height
 
         #now to create instance of model and put into db
-        park = ParkingZone(
+        obj, park = ParkingZone.objects.get_or_create(
             name = nameA,
             address = addressA,
             rates = {
@@ -140,7 +149,7 @@ def getParkingZoneQ():
             height = heightA,
             postcode = postcodeA
         )
-        park.save()
+        
         #end creating and saving parking zone, also end for loop for each parking area
     #after for loop through all pages ends
 #after def

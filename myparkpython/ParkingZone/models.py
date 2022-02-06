@@ -1,23 +1,24 @@
+from email.policy import default
 from django.db import models
-from django.forms import FloatField, IntegerField, JSONField
+
 
 class ParkingZone(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=255)
-    rates = JSONField()
-    openingHours = JSONField()
-    services = JSONField()
-    security = JSONField()
-    numSpaces = IntegerField()
-    evSpaces = IntegerField()
-    height = FloatField()
-    disabledBays = IntegerField()
-    postcode = models.CharField(max_length=7)
+    postcode = models.CharField(max_length=10)
+    rates = models.JSONField(default=[])
+    openingHours = models.JSONField(default=[])
+    services = models.JSONField(default=[])
+    security = models.JSONField(default=[])
+    numSpaces = models.IntegerField(default=0)
+    evSpaces = models.IntegerField(default=0)
+    height = models.FloatField(default=0)
+    disabledBays = models.IntegerField(default=0)
 
     class Meta:
         ordering = ('postcode',)
 
     def __str__(self):
-        return self.name + self.address + self.rates + self.openingHours + self.services + self.security + self.numSpaces + self.evSpaces + self.height + self.disabledBays
+        return self.name + self.address + self.postcode
 
     
