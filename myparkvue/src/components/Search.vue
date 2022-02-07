@@ -8,7 +8,7 @@
                 </span>
             </div>
             <div class="control">
-            <button class="button is-primary is-large">Search</button>
+            <button class="button is-primary is-large" @click="sendLocation">Search</button>
             </div>
         </div>
     </form>
@@ -27,8 +27,28 @@ export default {
             }
         );
         autocomplete.addListener("place_changed", () => {
+            console.log(autocomplete.getPlace().formatted_address);
+            console.log(autocomplete.getPlace().geometry.viewport.Ab.g);
             console.log(autocomplete.getPlace());
         })
+    },
+    methods:{
+         async sendLocation(){
+                await axios
+                    .post('/api/v1/location/create/', {
+                        'name': autocomplete.getPlace().name,
+                        'address' : autocomplete.getPlace().formatted_address,
+                        'lat' : autocomplete.getPlace().geometry.viewport.Ab.g,
+                        'long' : autocomplete.getPlace().geometry.viewport.Ra.g,
+                        })
+                    .then(response => {
+                        console.log(response.data);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+
+            }
     }
 }
 </script>

@@ -5,6 +5,8 @@ class Location(models.Model):
     slug = models.SlugField()
     lat = models.CharField(max_length=30)
     long = models.CharField(max_length=30)
+    address = models.CharField(max_length=100)
+    postcode = models.CharField(max_length=10)
 
     class Meta:
         ordering = ('name',)

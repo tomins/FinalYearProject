@@ -1,6 +1,7 @@
 from http.client import ImproperConnectionState
 from django.shortcuts import render
 import requests
+from ParkingZone.views import ParkingZoneByLocation
 from bs4 import BeautifulSoup
 import re
 from ParkingZone.models import ParkingZone
@@ -20,14 +21,35 @@ class LatestLocationList(APIView):
         return Response(serializer.data)
 
 @api_view(['POST'])
+def create(request):
+    name = request.data.get('name','')
+    address = request.data.get('name','')
+    lat = request.data.get('lat','')
+    long = request.data.get('long','')
+    postcode = address.split("London,",1)[1]
+    postcode = postcode.split(" ",2)[1]
+
+    if name:
+        obj, location = Location.objects.get_or_create(
+            name = name,
+            lat = lat,
+            long = long,
+            address = address,
+            postcode = postcode
+        )
+        serializer = LocationSerializer(location, many=True)
+        return Response(serializer.data)
+
+@api_view(['POST'])
 def search(request):
     query = request.data.get('query','')
 
     if query:
-        location = Location.objects.all()[0:1]
-        serializer = LocationSerializer(location, many=True)
-        getParkingZoneQ()
-        return Response(serializer.data)
+        location = Location.objects.filter(
+            name = query
+        )
+        getParkingZoneQ() 
+        return ParkingZoneByLocation(location)
 
 def getParkingZoneQ():
     r = requests.get('https://www.q-park.co.uk/en-gb/cities/london/')

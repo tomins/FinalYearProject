@@ -7,5 +7,7 @@ class LocationSerializer(serializers.ModelSerializer):
         fields = (
             "name",
             "lat",
-            "long"
+            "long", 
+            "address",
+            "postcode"
         )

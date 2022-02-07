@@ -24,7 +24,7 @@
             let params = new URLSearchParams(uri)
             
             if(params.get('location')){
-                
+                console.log(params.getAll)
                 this.query = params.get('location')
                 this.performSearch()
             }
