@@ -7,6 +7,8 @@ import re
 from ParkingZone.models import ParkingZone
 from django.db import models
 import json
+from django.http import HttpResponse
+import logging
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -22,12 +24,25 @@ class LatestLocationList(APIView):
 
 @api_view(['POST'])
 def create(request):
+    logging.basicConfig(level=logging.INFO)
+    r = request.data.get('address','')
+    soup= BeautifulSoup(r, 'html.parser')
     name = request.data.get('name','')
-    address = request.data.get('name','')
+    
+    logging.info("name: " + name)
+    address = ""
+    for x in soup.find_all('span',"street-address"):
+        address = address + x.text + ","
+    #logging.info(address)
     lat = request.data.get('lat','')
     long = request.data.get('long','')
-    postcode = address.split("London,",1)[1]
-    postcode = postcode.split(" ",2)[1]
+    p = []
+    for x in soup.find_all('span',"postal-code"):
+        p.append(x.text)
+    postcode = p[0]
+    postcode = postcode.split(" ",1)[0]
+    
+    #logging.info(postcode)
 
     if name:
         obj, location = Location.objects.get_or_create(
@@ -37,19 +52,21 @@ def create(request):
             address = address,
             postcode = postcode
         )
-        serializer = LocationSerializer(location, many=True)
-        return Response(serializer.data)
+        #serializer = LocationSerializer(obj, many=True)
+        return HttpResponse(status=200)
 
 @api_view(['POST'])
 def search(request):
+    logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
-
+    query = query.split(",",1)[0]
+    logging.info(query)
     if query:
         location = Location.objects.filter(
-            name = query
+            name__contains = query
         )
         getParkingZoneQ() 
-        return ParkingZoneByLocation(location)
+        return Response(ParkingZoneByLocation(request))
 
 def getParkingZoneQ():
     r = requests.get('https://www.q-park.co.uk/en-gb/cities/london/')
@@ -93,8 +110,8 @@ def getParkingZoneQ():
         #name, address and postcode
         for y in s.find_all('div',"card-meta-information parkingDetailCard-meta"):
             for n  in y.find_all('strong'):
-                nameA = n.get_text(strip=True)#Strip means take away all whitespace at start and end of the string"
-            addressA = addressA + " " +  y.get_text(strip=True)
+                nameA = n.get_text(strip=True) + " " #Strip means take away all whitespace at start and end of the string"
+            addressA = addressA +  y.get_text(strip=True) + " " 
             
         postcodeA = addressA.split("London",1)[1]
         postcodeA = postcodeA.split(" ",2)[1]
