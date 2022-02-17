@@ -31,7 +31,13 @@
     </section>
     
     <footer class="footer">
-      <p class="has-text-centered">Log in for more!</p>
+      <template v-if="!$store.state.token == ''" >
+        <p class="has-text-centered">Thanks for logging in!</p>
+      </template>
+      <template v-else>
+        <p class="has-text-centered">Log in for more!</p>
+      </template>
+      
     </footer>
   </div>
 </template>

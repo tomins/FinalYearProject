@@ -5,6 +5,7 @@ import LogIn from '../views/LogIn.vue'
 import MyAccount from '../views/MyAccount'
 import store from '../store'
 import LocationSearch from '../views/LocationSearch'
+import ParkingDetail from '../views/ParkingDetail'
 
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
     meta:{
       requireLogin: true
     }
+  },
+  {
+    path: '/:name',
+    name: 'ParkingDetail',
+    component: ParkingDetail
   },
 ]
 
