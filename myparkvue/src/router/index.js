@@ -5,7 +5,7 @@ import LogIn from '../views/LogIn.vue'
 import MyAccount from '../views/MyAccount'
 import store from '../store'
 import LocationSearch from '../views/LocationSearch'
-import ParkingDetail from '../views/ParkingDetail'
+import ParkingDetail from '../views/ParkingDetail.vue'
 
 
 const routes = [

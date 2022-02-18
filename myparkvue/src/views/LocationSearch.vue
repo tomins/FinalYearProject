@@ -30,6 +30,7 @@
             return{
                 locations:[],
                 query: '',
+                latlng: '',
                 parking: []
             }
         },
@@ -52,6 +53,9 @@
                     .post('/api/v1/location/search/', {'query': this.query})
                     .then(response => {
                         this.parking = response.data
+                        for (let i = 0; i < this.parking.length; i++) {
+                            this.getCrime({ address: this.parking[i].name });
+                        }
                         //this.getDistance() this is the start of displaying the parking data by location
                         console.log(response.data)
                     })
@@ -72,6 +76,34 @@
                         console.log(response);
                     });
             },
+
+            async getCrime(request){
+                const geocoder = new google.maps.Geocoder();
+                
+                //start get lat long for each parking zone
+                geocoder
+                    .geocode(request)
+                    .then((result)=> {
+                        const { results } = result;
+                        this.latlng = results[0].geometry.location;
+                    })
+                    .catch((e) => {
+                        console.log("Geocode was not successful for the following reason: " + e);
+                    });
+                //end get latlng for each parking zone
+
+                /*await axios//this is going to give django the parameters to search the DB/Api for crime by, it will return the crime data
+                    .post('/api/v1/crime/search/', {
+                        'name': request,
+                        'latlng': this.latlng
+                        })
+                    .then(response => {
+                        console.log(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })*/
+            }
         }
 
     }

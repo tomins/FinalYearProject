@@ -62,7 +62,10 @@
                     </div>
                 </div>
                 <div class="tile is-child is-vertical box">
-                    <p class="is-size-5 has-text-weight-semibold">Rates:</p>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><abbr title="Rates">Rates</abbr></th>   
                     <div class = "column is-6"
                         v-for="openingDays,openingHours   in ParkingZone.rates"
                         v-bind:key="openingHours">

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'product',
     'location',
     'ParkingZone',
+    'crime',
 ]
 
 CORS_ALLOWED_ORIGINS = [

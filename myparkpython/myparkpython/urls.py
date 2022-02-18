@@ -10,4 +10,5 @@ urlpatterns = [
     path('api/v1/', include('product.urls')),
     path('api/v1/', include('location.urls')),
     path('api/v1/', include('ParkingZone.urls')),
+    path('api/v1/', include('crime.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
