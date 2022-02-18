@@ -6,7 +6,7 @@ current tasks:
   - Add a way to filter the parking locations by location(miles or meters from given location), price(per 1 hour maybe), crime(importance scale 1-10) 
  
  **step 1: Get Crime data into DB**
-  - isolate the street name of a user location
+  - isolate the lat,lng of a user location
   - Check if this street is in the crime Db already:
   -   -if yes:
   -       - return this result(console log)
