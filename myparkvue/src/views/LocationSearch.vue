@@ -15,6 +15,14 @@
         <div class="box">
           <h3 class="is-size-4">{{ParkingZone.name}}</h3>
           <p class="is-size-6 has-text-grey">{{ParkingZone.numSpaces}}</p>
+          <div
+            v-for="Crime in crime"
+            v-bind:key="Crime.id">
+                <div v-if="{{ParkingZone.name}} === {{Crime.name}}">
+                    {{Crime.num_crimes}}
+                </div>
+                
+          </div>
           <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
         </div>
       </div>
@@ -31,7 +39,8 @@
                 locations:[],
                 query: '',
                 latlng: '',
-                parking: []
+                parking: [],
+                crime: []
             }
         },
         mounted(){
@@ -81,28 +90,29 @@
                 const geocoder = new google.maps.Geocoder();
                 
                 //start get lat long for each parking zone
-                geocoder
+                await geocoder//needed to add await here as the variable this.latlng wasn't being updatedin time
                     .geocode(request)
                     .then((result)=> {
                         const { results } = result;
-                        this.latlng = results[0].geometry.location;
+                        this.latlng = results[0].geometry.location.toString();
+                        
                     })
                     .catch((e) => {
                         console.log("Geocode was not successful for the following reason: " + e);
                     });
                 //end get latlng for each parking zone
-
-                /*await axios//this is going to give django the parameters to search the DB/Api for crime by, it will return the crime data
+                await axios//this is going to give django the parameters to search the DB/Api for crime by, it will return the crime data
                     .post('/api/v1/crime/search/', {
                         'name': request,
-                        'latlng': this.latlng
+                        'latlng': this.latlng,
                         })
                     .then(response => {
-                        console.log(response.data)
+                        this.crime.push(response.data)
+                        console.log(this.crime)
                     })
                     .catch(error => {
                         console.log(error)
-                    })*/
+                    })
             }
         }
 
