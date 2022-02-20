@@ -12,9 +12,9 @@ current tasks:
   -   -if yes:
   -       - return this result(console log)
   -   -else:
-  -       - search the api for this location
-  -       - calculate distance from the 2 points
-  -       - add 1 if the points within .2 miles
-  -       - once the entire result is sorted through then save the streeet name and num of crimes committed on it(could be more complicated to add in other crimes then just                   vehicular)
+  -       - DONE search the api for this location
+  -       - DONE calculate distance from the 2 points
+  -       - DONE add 1 if the points within .2 miles
+  -       - once the entire result is sorted through then save the street name and num of crimes committed on it(could be more complicated to add in other crimes then just                   vehicular)
   -       - Return the result of the database entry(console log)
   -       
