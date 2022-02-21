@@ -14,11 +14,12 @@ class ParkingZone(models.Model):
     evSpaces = models.IntegerField(default=0)
     height = models.FloatField(default=0)
     disabledBays = models.IntegerField(default=0)
+    latlong = models.CharField(max_length=50)
 
     class Meta:
         ordering = ('postcode',)
 
     def __str__(self):
-        return self.name + self.address + self.postcode
+        return self.name
 
     

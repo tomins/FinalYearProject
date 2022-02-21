@@ -10,4 +10,4 @@ class Crime(models.Model):
         ordering = ('name',)
 
     def __str___(self):
-        return self.name + self.num_crimes
+        return self.name

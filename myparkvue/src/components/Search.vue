@@ -28,13 +28,13 @@ export default {
             }
         );
         autocomplete.addListener("place_changed", () => {
-            console.log(autocomplete.getPlace())
+            console.log(autocomplete.getPlace());
             axios
                 .post('/api/v1/location/create/', {
                     'name': autocomplete.getPlace().name,
                     'address' : autocomplete.getPlace().adr_address,
-                    'lat' : autocomplete.getPlace().geometry.viewport.Ab.g,
-                    'long' : autocomplete.getPlace().geometry.viewport.Ra.g,
+                    'lat' : autocomplete.getPlace().geometry.viewport.Qa.h,
+                    'long' : autocomplete.getPlace().geometry.viewport.ub.h,
                     })
                 .then(response => {
                     console.log(response.data);
@@ -43,25 +43,6 @@ export default {
                     console.log(error)
                 })
         })
-    },
-    methods:{
-        async sendLocation(){
-            console.log(autocomplete.getPlace().adr_address);
-            await axios
-                .post('/api/v1/location/create/', {
-                    'name': autocomplete.getPlace().name,
-                    'address' : autocomplete.getPlace().formatted_address,
-                    'lat' : autocomplete.getPlace().geometry.viewport.Ab.g,
-                    'long' : autocomplete.getPlace().geometry.viewport.Ra.g,
-                    })
-                .then(response => {
-                    console.log(response.data);
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
-            }
     }
 }
 </script>

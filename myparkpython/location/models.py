@@ -12,7 +12,7 @@ class Location(models.Model):
         ordering = ('name',)
 
     def __str___(self):
-        return self.name + self.long + self.lat
+        return self.name
 
     def get_absolute_url(self):
         return f'/{self.slug}/'

@@ -7,10 +7,11 @@ from .models import ParkingZone
 from location.models import Location
 from .serializers import ParkingZoneSerializer
 import logging
+from django.http import HttpResponse
 
 class ParkingZoneList(APIView):
     def get(self, request, format=None):
-        parkingZone = ParkingZone.objects.all()[0:5]
+        parkingZone = ParkingZone.objects.all()
         serializer = ParkingZoneSerializer(parkingZone, many = True)
         return Response(serializer.data)
 
@@ -30,6 +31,20 @@ def ParkingZoneByLocation(request):
         serializer = ParkingZoneSerializer(parkingZone, many = True)
         return serializer.data
 
+@api_view(['POST'])
+def ParkingByDistance(request):
+    logging.basicConfig(level=logging.INFO)
+    distance = request.data.get('distance','')
+    lat = request.data.get('lat','')
+    long = request.data.get('lat','')
+    parkingZones = ParkingZone.objects.all()
+    for ParkingZone in parkingZones:
+        latlong = ParkingZone.latlong
+        logging.info(latlong)
+        lat2 = latlong[0]
+        logging.info(lat2)
+    return HttpResponse(status=200) 
+    
 
 
 @api_view(['POST'])

@@ -1,4 +1,5 @@
 from http.client import ImproperConnectionState
+from urllib import request
 from django.shortcuts import render
 import requests
 from ParkingZone.views import ParkingZoneByLocation
@@ -7,6 +8,7 @@ import re
 from ParkingZone.models import ParkingZone
 from django.db import models
 import json
+import urllib
 from django.http import HttpResponse
 import logging
 
@@ -103,6 +105,7 @@ def getParkingZoneQ():
         evSpacesA = 0
         disabledBaysA = 0
         postcodeA = ""
+        latlong = ""
         x = "https://www.q-park.co.uk" + x #this makes x a full link not just partial
         req = requests.get(x)
         s = BeautifulSoup(req.text, 'html.parser')
@@ -115,6 +118,7 @@ def getParkingZoneQ():
             
         postcodeA = addressA.split("London",1)[1]
         postcodeA = postcodeA.split(" ",2)[1]
+        latlong = doLatLong(nameA)
         #end name, address and postcode
 
         #rates
@@ -186,13 +190,21 @@ def getParkingZoneQ():
             disabledBays = disabledBaysA,
             evSpaces = evSpacesA,
             height = heightA,
-            postcode = postcodeA
+            postcode = postcodeA,
+            latlong = latlong
         )
         
         #end creating and saving parking zone, also end for loop for each parking area
     #after for loop through all pages ends
 #after def
-        
 
+def doLatLong(nameA):
+    logging.basicConfig(level=logging.INFO)
+    base_url= "https://maps.googleapis.com/maps/api/geocode/json?"
+    AUTH_KEY = "AIzaSyDWmiNZ5XRvjoGggjfUP-_FGj8cycVu1LE"
+    parameters = {"address": nameA, "key": AUTH_KEY}
+    r = requests.get(f"{base_url}{urllib.parse.urlencode(parameters)}") 
+    data = json.loads(r.content)
+    return data.get("results")[0].get("geometry").get("location")
 
 

@@ -15,5 +15,6 @@ class ParkingZoneSerializer(serializers.ModelSerializer):
             "evSpaces",
             "height",
             "disabledBays",
-            "postcode"
+            "postcode",
+            "latlong"
         )

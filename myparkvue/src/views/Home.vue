@@ -46,36 +46,18 @@
 </template>
 
 <script>
-import axios from 'axios'
-import GoogleMap from '@/components/GoogleMap.vue'
 import Search from '@/components/Search.vue'
 export default {
   name: 'Home',
   data(){
     return {
 
-      //latestProducts: []
     }
   },
-  components: {
-    GoogleMap, 
+  components: { 
     Search
   },
-  mounted(){
-    this.getLatestProducts()
-  },
-  methods:{
-    getLatestProducts(){
-      axios
-        .get('/api/v1/latest-products/')
-        .then(response=>{
-          this.latestProducts = response.data
-        })
-        .catch(error=>{
-          console.log(error)
-        })
-    }
-  }
+  
 }
 </script>
 

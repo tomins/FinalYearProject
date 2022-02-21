@@ -66,6 +66,9 @@
                         <thead>
                             <tr>
                                 <th><abbr title="Rates">Rates</abbr></th>   
+                            </tr>
+                        </thead>
+                    </table>
                     <div class = "column is-6"
                         v-for="openingDays,openingHours   in ParkingZone.rates"
                         v-bind:key="openingHours">
@@ -85,6 +88,7 @@
                 
             </div>
             <div class="column is-6">
+
                 <h2 class="subtitle">Map View</h2>
 
                 <p>Map Goes Here</p>
