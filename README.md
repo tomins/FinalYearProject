@@ -29,12 +29,12 @@ current tasks:
   -   - DONE Crimes between 1-10 scale
   - DONE KINDA Create method to check each of these
 **Step 2.5: Gets the geolocation of each of the parkingZones**
-  - Add a latlng area to ParkingZone (migrate)
-  - When each one is found use the geocoder from google
-  - Will then allow step 3 to go easier
+  - DONE Add a latlng area to ParkingZone (migrate)
+  - DONE When each one is found use the geocoder from google
+  - DONE Will then allow step 3 to go easier
 **Step 3: Get all parking within a distance**
+  -Send request from vue rathe rathen by postcodre(currently in location)
   - Create a searchByDistance in views.py in parkingZone
   -   - Takes in a latLong of the users location and distance wanted
-  -   - Gets the geolocation of each of the parkingZones(maybe go back and do this for each one on creation (step 2.5))
   -   - Compare distance and if less then the distance wanted then add it to the list of ParkingZones to return
   
