@@ -3,6 +3,7 @@ from urllib import request
 from django.shortcuts import render
 import requests
 from ParkingZone.views import ParkingZoneByLocation
+from ParkingZone.views import ParkingByDistance
 from bs4 import BeautifulSoup
 import re
 from ParkingZone.models import ParkingZone
@@ -68,7 +69,7 @@ def search(request):
             name__contains = query
         )
         getParkingZoneQ() 
-        return Response(ParkingZoneByLocation(request))
+        return Response(ParkingByDistance(request))
 
 def getParkingZoneQ():
     r = requests.get('https://www.q-park.co.uk/en-gb/cities/london/')

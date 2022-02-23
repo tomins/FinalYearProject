@@ -32,6 +32,9 @@
                             <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="0" type="range">
                             <span id="crimeOut">0</span>
                         </div>
+                        <div class="dropdown-item">
+                            <button class="button is-dark" @click="performSearch">Submit Filters</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,15 +68,18 @@
                 latlng: '',
                 parking: [],
                 crime: [],
+                distance: 1,
             }
         },
+        
         mounted(){
             //start distance
             var distSlider = document.getElementById("distSlider");
             var distoutput = document.getElementById("distOut");
             distoutput.innerHTML = distSlider.value; 
             distSlider.oninput = function() {
-            distoutput.innerHTML = this.value;
+                distoutput.innerHTML = this.value;
+                this.distance = this.value;
             }
             //end distance, start price
             var priceSlider = document.getElementById("priceSlider");
@@ -101,15 +107,20 @@
                 console.log("I am in the Location Search: the query was blank")
             }
         },
+        
         methods:{
             async performSearch(){
+                console.log(this.distance)
                 await axios
-                    .post('/api/v1/location/search/', {'query': this.query})
+                    .post('/api/v1/location/search/', {
+                        'query': this.query,
+                        'distance': this.distance
+                        })
                     .then(response => {
                         this.parking = response.data
-                        for (let i = 0; i < this.parking.length; i++) {
-                            this.getCrime({ address: this.parking[i].name });
-                        }
+                        //for (let i = 0; i < this.parking.length; i++) {
+                            //this.getCrime({ address: this.parking[i].name });
+                        //}
                         //this.getDistance() this is the start of displaying the parking data by location
                         console.log(response.data)
                     })
