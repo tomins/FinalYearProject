@@ -33,7 +33,7 @@
                             <span id="crimeOut">0</span>
                         </div>
                         <div class="dropdown-item">
-                            <button class="button is-dark" @click="performSearch">Submit Filters</button>
+                            <button class="button is-dark" @click="setDistance">Submit Filters</button>
                         </div>
                     </div>
                 </div>
@@ -79,8 +79,9 @@
             distoutput.innerHTML = distSlider.value; 
             distSlider.oninput = function() {
                 distoutput.innerHTML = this.value;
-                this.distance = this.value;
             }
+            
+            
             //end distance, start price
             var priceSlider = document.getElementById("priceSlider");
             var priceOutput = document.getElementById("priceOut");
@@ -110,7 +111,6 @@
         
         methods:{
             async performSearch(){
-                console.log(this.distance)
                 await axios
                     .post('/api/v1/location/search/', {
                         'query': this.query,
@@ -118,10 +118,10 @@
                         })
                     .then(response => {
                         this.parking = response.data
-                        //for (let i = 0; i < this.parking.length; i++) {
-                            //this.getCrime({ address: this.parking[i].name });
-                        //}
-                        //this.getDistance() this is the start of displaying the parking data by location
+                        for (let i = 0; i < this.parking.length; i++) {
+                            this.getCrime({ address: this.parking[i].name });
+                        }
+                        console.log(this.crime)
                         console.log(response.data)
                     })
                     .catch(error => {
@@ -129,17 +129,12 @@
                     })
 
             },
-            getDistance(){//need to add more in here to search correct origin and all destinations(a list of address')
-                const service = new google.maps.DistanceMatrixService();
-                const r = {
-                    origins: ['123 Buckingham Palace Road, London, SW1W 9SR, UK'],
-                    destinations: ['Newport Place, London, WC2H 7PU, UK'],
-                    travelMode: 'WALKING',
-                    }
-                service.getDistanceMatrix(r).then((response) => {
-                        // put response
-                        console.log(response);
-                    });
+            
+
+            setDistance(){
+                var distSlider = document.getElementById("distSlider");
+                this.distance = distSlider.value; 
+                this.performSearch();
             },
 
             async getCrime(request){
@@ -164,7 +159,6 @@
                         })
                     .then(response => {
                         this.crime.push(response.data)
-                        console.log(this.crime)
                     })
                     .catch(error => {
                         console.log(error)
