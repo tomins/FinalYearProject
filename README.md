@@ -1,12 +1,12 @@
 # FinalYearProject
 current tasks:
   - DONE Get crime data into DB
-  - Create filter place
-  - Get all parking by default distance(to link to filter)
-  - Display crime data with parking locations - display all parking by num of crimes per year on street
+  - DONE Create filter place
+  - DONE Get all parking by default distance(to link to filter)
+  - DONE Display crime data with parking locations - display all parking by num of crimes per year on street
   - Add price to the front of the parking location (to be added as something to filter by)
-  - Add button to filter
-  - Add a way to filter the parking locations by location(miles or meters from given location), price(per 1 hour maybe), crime(importance scale 1-10) 
+  - DONE Add button to filter
+  - Add a way to filter the parking locations by DONE location(miles or meters from given location), price(per 1 hour maybe), crime(importance scale 1-10) 
  
  **step 1: Get Crime data into DB**
   - DONE isolate the lat,lng of a user location
@@ -33,8 +33,8 @@ current tasks:
   - DONE When each one is found use the geocoder from google
   - DONE Will then allow step 3 to go easier
 **Step 3: Get all parking within a distance**
-  -Send request from vue rathe rathen by postcodre(currently in location)
-  - Create a searchByDistance in views.py in parkingZone
-  -   - Takes in a latLong of the users location and distance wanted
-  -   - Compare distance and if less then the distance wanted then add it to the list of ParkingZones to return
+  - DONE Send request from vue rathe rathen by postcodre(currently in location)
+  - DONE Create a searchByDistance in views.py in parkingZone
+  -   - DONE Takes in a latLong of the users location and distance wanted
+  -   - DONECompare distance and if less then the distance wanted then add it to the list of ParkingZones to return
   
