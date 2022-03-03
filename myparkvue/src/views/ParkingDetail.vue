@@ -76,7 +76,7 @@
                         <p class="is-size-5 has-text-weight-medium is-capitalized">{{openingHours}}:</p>
                         </div>
                         <div class="tile is-child box">
-                        <p class="is-size-5 has-text-grey">{{openingDays}}</p>
+                        <p class="is-size-5 has-text-grey">{{openingDays[0]}}</p>
                         </div>
                         
                     </div>

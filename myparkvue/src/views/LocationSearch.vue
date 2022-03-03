@@ -38,20 +38,66 @@
                     </div>
                 </div>
             </div>
-    </div>
-    <div class="columns is-multiline">
-      <div
-        class = "column is-3"
-        v-for="ParkingZone in parking"
-        v-bind:key="ParkingZone.id">
-        <div class="box">
-          <h3 class="is-size-4">{{ParkingZone.name}}</h3>
-          <p class="is-size-6 has-text-grey">{{ParkingZone.numSpaces}}</p>
-          <p class="is-size-6 has-text-grey">Number of Crimes in the area: {{isSame(ParkingZone.name)}}</p>
-          <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
+        
+        <div class= "columns">
+            <div class="column is-9">
+                <div class="box  has-background-white-ter">
+                    <div class="columns">
+                        
+                            <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> Parking Zone Name</h3>
+                            </div>
+                        
+                            <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> Number of spaces avaliable</h3>
+                            </div>
+                        
+                            <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> Crimes in the area</h3>
+                            </div>
+                            <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> Minimum price</h3>
+                            </div>
+                        
+                            <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> More details</h3>
+                            </div>
+                    </div>
+                </div>
+            </div>    
         </div>
-      </div>
+        <div class="columns is-multiline">
+        <div
+            class = "column is-9"
+            v-for="ParkingZone in parking"
+            v-bind:key="ParkingZone.id">
+            <div class="box has-background-grey-lighter	">
+                <div class = "columns is-multiline">
+                    <div
+                        class = "column">
+                        <h3 class="is-size-4">{{ParkingZone.name}}</h3>
+                    </div>
+                    <div
+                        class = "column">
+                        <p class="is-size-6 has-text-grey">{{ParkingZone.numSpaces}}</p>
+                    </div>
+                    <div
+                        class = "column">
+                        <p class="is-size-6 has-text-grey">{{isSame(ParkingZone.name)}}</p>
+                    </div>
+                    <div class = "column">
+                        <p class="is-size-6 has-text-grey">{{ParkingZone.rates["price"][0]}}</p>
+                    </div>
+                    
+                    <div
+                        class = "column">
+                        <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
+                    </div>
+                </div>
+            </div>
+        </div>
     
+    </div>
     </div>
 </template>
 
@@ -67,8 +113,10 @@
                 query: '',
                 latlng: '',
                 parking: [],
+                parking2: [],
                 crime: [],
                 distance: 1,
+                price: 10,
             }
         },
         
@@ -133,8 +181,18 @@
 
             setDistance(){
                 var distSlider = document.getElementById("distSlider");
-                this.distance = distSlider.value; 
+                this.distance = distSlider.value;
+                var priceSlider =  document.getElementById("priceSlider");
+                this.price = priceSlider.value;
                 this.performSearch();
+                var i;
+                for(i = 0;i<this.parking.length;i++){
+                    var rate = this.parking[i].rates["price"][0].replace('£','');
+                    if(rate <= this.price){
+                        this.parking.splice(this.parking[i], 1);
+                    }
+                }
+                console.log("parking2" + this.parking);
             },
 
             async getCrime(request){
