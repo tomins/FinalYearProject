@@ -38,3 +38,6 @@ current tasks:
   -   - DONE Takes in a latLong of the users location and distance wanted
   -   - DONECompare distance and if less then the distance wanted then add it to the list of ParkingZones to return
   
+  
+  
+  Need to figure out how to get distance to be returned with each parkingZone
