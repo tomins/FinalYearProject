@@ -40,7 +40,7 @@
             </div>
         
         <div class= "columns">
-            <div class="column is-9">
+            <div class="column is-12">
                 <div class="box  has-background-white-ter">
                     <div class="columns">
                         
@@ -60,6 +60,9 @@
                             </div>
                         
                             <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> Distance</h3>
+                            </div>
+                            <div class="column">
                                 <h3 class="is-underlined has-text-weight-medium"> More details</h3>
                             </div>
                     </div>
@@ -68,7 +71,7 @@
         </div>
         <div class="columns is-multiline">
         <div
-            class = "column is-9"
+            class = "column is-12"
             v-for="ParkingZone in parking"
             v-bind:key="ParkingZone.id">
             <div class="box has-background-grey-lighter	">
@@ -87,6 +90,9 @@
                     </div>
                     <div class = "column">
                         <p class="is-size-6 has-text-grey">{{ParkingZone.rates["price"][0]}}</p>
+                    </div>
+                    <div class = "column">
+                        <p class="is-size-6 has-text-grey">{{ParkingZone.distance.toFixed(2)}} miles</p>
                     </div>
                     
                     <div
@@ -166,11 +172,12 @@
                         })
                     .then(response => {
                         this.parking = response.data
+                        console.log(response.data)
                         for (let i = 0; i < this.parking.length; i++) {
                             this.getCrime({ address: this.parking[i].name });
                         }
                         console.log(this.crime)
-                        console.log(response.data)
+                        
                     })
                     .catch(error => {
                         console.log(error)
@@ -189,7 +196,7 @@
                 for(i = 0;i<this.parking.length;i++){
                     var rate = this.parking[i].rates["price"][0].replace('£','');
                     if(rate <= this.price){
-                        this.parking.splice(this.parking[i], 1);
+                        this.parking.splice(indexof(this.parking[i]), 1);
                     }
                 }
                 console.log("parking2" + this.parking);

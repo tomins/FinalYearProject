@@ -15,7 +15,8 @@ class ParkingZone(models.Model):
     height = models.FloatField(default=0)
     disabledBays = models.IntegerField(default=0)
     latlong = models.CharField(max_length=50)
-
+    distance = models.FloatField(default=0)
+    
     class Meta:
         ordering = ('postcode',)
 

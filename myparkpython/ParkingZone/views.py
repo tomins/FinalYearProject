@@ -55,7 +55,10 @@ def ParkingByDistance(request):
         latLongJson = json.loads(json_acceptable_string)
         lat2 = latLongJson["lat"]
         long2 = latLongJson["lng"]
-        if(checkDistance(distance, latLoc, longLoc, lat2, long2)):
+        d = checkDistance(distance, latLoc, longLoc, lat2, long2)
+        setattr(p, 'distance', d)
+        logging.info("line 28 :" + str(p.distance))
+        if(d<=distance):
             parkingZoneFinal.append(p)
     serializer = ParkingZoneSerializer(parkingZoneFinal, many = True)
     return serializer.data
@@ -73,10 +76,7 @@ def checkDistance(distance, latLoc, longLoc, lat2, long2):
     c = 2 * asin(sqrt(a))
     r = 3956 #radius of earth in miles
     d = (c * r)
-    if(d < float(distance)):
-        return(True)
-    else:
-        return(False)
+    return d
     
 
 

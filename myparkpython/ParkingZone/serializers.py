@@ -16,5 +16,6 @@ class ParkingZoneSerializer(serializers.ModelSerializer):
             "height",
             "disabledBays",
             "postcode",
-            "latlong"
+            "latlong",
+            "distance"
         )
