@@ -57,7 +57,6 @@ def ParkingByDistance(request):
         long2 = latLongJson["lng"]
         d = checkDistance(distance, latLoc, longLoc, lat2, long2)
         setattr(p, 'distance', d)
-        logging.info("line 28 :" + str(p.distance))
         if(d<=distance):
             parkingZoneFinal.append(p)
     serializer = ParkingZoneSerializer(parkingZoneFinal, many = True)
