@@ -88,11 +88,11 @@
                         class = "column has-text-justified" :style="{'background-color': isSameColours(ParkingZone.name) }" >
                         <p  class="is-size-6 has-text-black">{{isSame(ParkingZone.name)}}</p>
                     </div>
-                    <div class = "column has-text-justified">
-                        <p class="is-size-6 has-text-grey">{{ParkingZone.rates["price"][0]}}</p>
+                    <div class = "column has-text-justified" :style="{'background-color': getPriceColour(ParkingZone.name) }">
+                        <p class="is-size-6 has-text-black">{{ParkingZone.rates["price"][0]}}</p>
                     </div>
-                    <div class = "column">
-                        <p class="is-size-6 has-text-grey">{{ParkingZone.distance.toFixed(2)}} miles</p>
+                    <div class = "column" :style="{'background-color': getDistanceColour(ParkingZone.name) }">
+                        <p class="is-size-6 has-text-black">{{ParkingZone.distance.toFixed(2)}} miles</p>
                     </div>
                     
                     <div
@@ -124,11 +124,17 @@
                 distance: 1,
                 price: 10,
                 crimeMax : 0,
-                crimeMin : 0,
+                crimeMin : 1000,
                 crimeRange : 0,
                 spacesRange: 0,
                 spacesMax: 0,
-                spacesMin: 0,
+                spacesMin: 1000,
+                priceMax: 0,
+                priceMin: 1000,
+                priceRange: 0,
+                distanceMin: 10000,
+                distanceMax: 0,
+                distanceRange: 0,
             }
         },
         
@@ -259,55 +265,123 @@
             },
             getSpacesColour(name){
                 var i;
-                this.distanceRating()
+                this.spacesRating()
                 for(i = 0;i<this.parking.length;i++){
                     if(this.parking[i].name === name){
                         return this.parking[i].colour;
                     }
                 } 
             },
+            getDistanceColour(name){
+                var i;
+                this.distanceRating();
+                for(i = 0;i<this.parking.length;i++){
+                    if(this.parking[i].name === name){
+                        return this.parking[i].distanceColour;
+                    }
+                } 
+            },
+            getPriceColour(name){
+                var i;
+                this.priceRating();
+                for(i = 0;i<this.parking.length;i++){
+                    if(this.parking[i].name === name){
+                        return this.parking[i].priceColour;
+                    }
+                }
+            },
             locDistance(){
                 this.distance = 2
             },
-            distanceRating(){
-                console.log("method running");
+            spacesRating(){
                  var i;
                 
                 for(i = 0;i<this.parking.length;i++){
-                    if(parseInt(this.parking[i].numSpaces) < this.spacesMin){
-                        this.spacesMin = this.parking[i].numSpaces;
-                    }
-                    else if(parseInt(this.parking[i].numSpaces) >= this.spacesMax){
+                    if(parseInt(this.parking[i].numSpaces) > this.spacesMax){
                         this.spacesMax = this.parking[i].numSpaces;
+                    }
+                    else if(parseInt(this.parking[i].numSpaces) < this.spacesMin){
+                        this.spacesMin = this.parking[i].numSpaces;
                     }
                     
                 }
                 this.spacesRange = this.spacesMax - this.spacesMin;
                 var percentage;
+                var minus;
                 for(i = 0;i<this.parking.length;i++){
-                    percentage = this.parking[i].numSpaces/this.spacesRange;
+                    minus = this.parking[i].numSpaces - this.spacesMin;
+                    percentage = minus/this.spacesRange;
                     this.parking[i].percentage = percentage;
                     this.parking[i].colour = this.getColour(percentage);
+                }
+            },
+            priceRating(){
+                var i;
+                
+                for(i = 0;i<this.parking.length;i++){
+                    var priceWithout = this.parking[i].rates["price"][0].replace(/£/g,'');
+                   if(priceWithout > this.priceMax){
+                       this.priceMax = priceWithout;
+                   }
+                   else if(priceWithout< this.priceMin){
+                       this.priceMin = priceWithout;
+                   }
+                }
+                this.priceRange = this.priceMax - this.priceMin;
+                var percentage;
+                var minus;
+                for(i = 0;i<this.parking.length;i++){
+                    var priceWithout = this.parking[i].rates["price"][0].replace(/£/g,'');
+                    minus = priceWithout - this.priceMin
+                    percentage = minus/this.priceRange;
+                    this.parking[i].pricePercentage = percentage;
+                    this.parking[i].priceColour = this.getColour(percentage);
                 }
             },
             crimeRating(){
                 var i;
                 
                 for(i = 0;i<this.crime.length;i++){
-                    if(parseInt(this.crime[i].num_crimes) < this.crimeMin){
-                        this.crimeMin = this.crime[i].num_crimes
+                    if(parseInt(this.crime[i].num_crimes) > this.crimeMax){
+                        this.crimeMax = this.crime[i].num_crimes
                     }
-                    else if(parseInt(this.crime[i].num_crimes) >= this.crimeMax){
-                        this.crimeMax = this.crime[i].num_crimes;
+                    else if(parseInt(this.crime[i].num_crimes) < this.crimeMin){
+                        this.crimeMin = this.crime[i].num_crimes;
                     }
                     
                 }
                 this.crimeRange = this.crimeMax - this.crimeMin;
                 var percentage;
+                var minus;
                 for(i = 0;i<this.crime.length;i++){
-                    percentage = this.crime[i].num_crimes/this.crimeRange;
+                    minus = this.crime[i].num_crimes - this.crimeMin;
+                    percentage = minus/this.crimeRange;
                     this.crime[i].percentage = percentage;
                     this.crime[i].colour = this.getColour(percentage);
+                }
+            },
+            distanceRating(){
+                var i;
+                
+                for(i = 0;i<this.parking.length;i++){
+                    if(parseFloat(this.parking[i].distance) > this.distanceMax){
+                        this.distanceMax = parseFloat(this.parking[i].distance);
+                    }
+                    else if(parseFloat(this.parking[i].distance) < this.distanceMin){
+                        
+                        this.distanceMin = parseFloat(this.parking[i].distance);
+                    }
+                    
+                }
+                this.distanceRange = this.distanceMax - this.distanceMin;
+                console.log(this.distanceRange);
+                var percentage;
+                var minus;
+                for(i = 0;i<this.parking.length;i++){
+                    minus = this.parking[i].distance - this.distanceMin;
+                    percentage = minus/this.distanceRange;
+                    this.parking[i].distancePercentage = percentage;
+                    this.parking[i].distanceColour = this.getColour(percentage);
                 }
             },
             getColour(percentage){
