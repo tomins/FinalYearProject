@@ -11,4 +11,5 @@ current tasks:
     - Type of vehicle (1)
   - fix error with search not working on new locations (0.5)
   - refactor python to search db and then do the get on the api only if not found (0.5)
+  - make the front end display results based off overall rating (0.5)
    
