@@ -6,37 +6,50 @@
                 <h2 class="is-size-5 has-text-grey">Parking zones near: "{{query}}"</h2>
             </div>
         </div>
-        <div class="dropdown is-hoverable">
-                <div class="dropdown-trigger">
-                    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                        <span>Filters</span>
-                        <span class="icon is-small">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                        </span>
-                    </button>
-                </div>
-                <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content">
-                        <div class="dropdown-item">
-                            <span>Max Distance (miles)</span>
-                            <input id="distSlider" class="slider has-output-tooltip is-fullwidth" step="0.2" min="0.2" max="2" value="1" type="range">
-                            <span id="distOut">0.2</span>
-                        </div>
-                        <div class="dropdown-item">
-                            <span>Max Price (£)</span>
-                            <input id="priceSlider" class="slider has-output-tooltip is-fullwidth" step="0.01" min="0" max="10" value="10" type="range">
-                            <span id="priceOut">10</span>
-                        </div>
-                        <div class="dropdown-item">
-                            <span>Crime importance</span>
-                            <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="10" type="range">
-                            <span id="crimeOut">10</span>
-                        </div>
-                        <div class="dropdown-item">
-                            <button class="button is-dark" @click="setDistance">Submit Filters</button>
+        <nav class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <div class="dropdown is-hoverable">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <span>Filters</span>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <div class="dropdown-item">
+                                        <span>Max Distance (miles)</span>
+                                        <input id="distSlider" class="slider has-output-tooltip is-fullwidth" step="0.2" min="0.2" max="2" value="1" type="range">
+                                        <span id="distOut">0.2</span>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <span>Max Price (£)</span>
+                                        <input id="priceSlider" class="slider has-output-tooltip is-fullwidth" step="0.01" min="0" max="10" value="10" type="range">
+                                        <span id="priceOut">10</span>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <span>Crime importance</span>
+                                        <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="10" type="range">
+                                        <span id="crimeOut">10</span>
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <button class="button is-dark" @click="setDistance">Submit Filters</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <button class="button is-dark">Map View</button>
+                        </div>
+                    </div>
+                </nav>
             </div>
         
         <div class= "columns">
@@ -108,8 +121,6 @@
                 </div>
             </div>
         </div>
-    
-    </div>
     </div>
 </template>
 
@@ -129,7 +140,7 @@
                 crime: [],
                 distance: 1,
                 price: 10,
-                crime:10,
+                crimeFilter: 10,
                 crimeMax : 0,
                 crimeMin : 1000,
                 crimeRange : 0,
@@ -224,17 +235,15 @@
                     this.price = priceSlider.value;
                     var i;
                     for(i = 0;i<this.parking.length;i++){
-                        var rate = this.parking[i].rates["price"][0].replace('£','');
                         if(parseFloat(this.parking[i].rates["price"][0].replace('£','')) > this.price){
                             this.parking.splice(i, 1);
                         }
                     }
                 }
-                if(this.crime != crimeSlider.value){
-                    this.crime = crimeSlider.value;
+                if(this.crimeFilter != crimeSlider.value){
+                    this.crimeFilter = crimeSlider.value;
                     var i;
                     for(i = 0;i<this.crime.length;i++){
-                        console.log("crime");
                         if(this.crime[i].percentage > (this.crime/10)){
                             for(x = 0;x<this.parking.length;x++){
                                 if(this.parking[x].name === this.crime[i].name){
