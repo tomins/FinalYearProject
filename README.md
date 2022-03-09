@@ -1,6 +1,6 @@
 # FinalYearProject
 current tasks:
-  - add a column to rate all parking zones against eachother (0.5)
+  - DONE add a column to rate all parking zones against eachother (0.5)
   - price filter - fix (0.5)
   - crime filter (1)
   - Map view - all (0.5) 
