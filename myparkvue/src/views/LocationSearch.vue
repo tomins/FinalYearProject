@@ -65,6 +65,9 @@
                             <div class="column">
                                 <h3 class="is-underlined has-text-weight-medium"> More details</h3>
                             </div>
+                            <div class="column">
+                                <h3 class="is-underlined has-text-weight-medium"> Overall rating</h3>
+                            </div>
                     </div>
                 </div>
             </div>    
@@ -98,6 +101,9 @@
                     <div
                         class = "column">
                         <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
+                    </div>
+                    <div class = "column"  :style="{'background-color': getOverallColour(ParkingZone.name) }">
+                        <p class="is-size-6 has-text-black">{{ParkingZone.overallRate.toFixed(2)}} </p>
                     </div>
                 </div>
             </div>
@@ -135,6 +141,9 @@
                 distanceMin: 10000,
                 distanceMax: 0,
                 distanceRange: 0,
+                overallMax: 0,
+                overallMin: 100,
+                overallRange: 100,
             }
         },
         
@@ -203,18 +212,61 @@
 
             setDistance(){
                 var distSlider = document.getElementById("distSlider");
-                this.distance = distSlider.value;
+                
                 var priceSlider =  document.getElementById("priceSlider");
-                this.price = priceSlider.value;
-                this.performSearch();
-                var i;
-                for(i = 0;i<this.parking.length;i++){
-                    var rate = this.parking[i].rates["price"][0].replace('£','');
-                    if(rate <= this.price){
-                        this.parking.splice(indexof(this.parking[i]), 1);
+                if(this.distance != distSlider.value){
+                    this.distance = distSlider.value;
+                    this.performSearch();
+                }
+                if(this.price != priceSlider.value){
+                    this.price = priceSlider.value;
+                    var i;
+                    for(i = 0;i<this.parking.length;i++){
+                        var rate = this.parking[i].rates["price"][0].replace('£','');
+                        if(parseFloat(this.parking[i].rates["price"][0].replace('£','')) > this.price){
+                            this.parking.splice(i, 1);
+                        }
                     }
                 }
-                console.log("parking2" + this.parking);
+                
+            },
+            combinedRating(){
+                var i;
+                var x;
+                var distancePer;
+                var spacesPer;
+                var pricePer;
+                var crimePer;
+                 
+
+                for(i = 0;i<this.parking.length;i++){
+                    spacesPer = this.parking[i].percentage;
+                    distancePer = this.parking[i].distancePercentage;
+                    pricePer = this.parking[i].pricePercentage;
+                    for(x = 0;x<this.crime.length;x++){
+                        if(this.crime[x].name === this.parking[i].name){
+                            crimePer = this.crime[x].percentage;
+                        }
+                    }
+                    this.parking[i].overallRate = (spacesPer + pricePer + crimePer + distancePer)/4;
+                    if(this.parking[i].overallRate > this.overallMax){
+                        this.overallMax = this.parking[i].overallRate;
+                    }
+                    else if(this.parking[i].overallRate < this.overallMin){
+                        
+                        this.overallMin = this.parking[i].overallRate;
+                    }
+                }
+                this.overallRange = this.overallMax - this.overallMin;
+                var percentage;
+                var minus;
+                
+                for(i = 0;i<this.parking.length;i++){
+                    minus = this.parking[i].overallRate - this.overallMin;
+                    percentage = minus/this.overallRange;
+                    this.parking[i].overallPer = percentage;
+                    this.parking[i].overallColor = this.getColour(percentage);
+                }
             },
 
             async getCrime(request){
@@ -256,6 +308,7 @@
             isSameColours(name){
                 var i;
                 this.crimeRating()
+                this.combinedRating()
                 for(i = 0;i<this.crime.length;i++){
                     if(this.crime[i].name === name){
                         return this.crime[i].colour;
@@ -269,6 +322,14 @@
                 for(i = 0;i<this.parking.length;i++){
                     if(this.parking[i].name === name){
                         return this.parking[i].colour;
+                    }
+                } 
+            },
+            getOverallColour(name){
+                var i;
+                for(i = 0;i<this.parking.length;i++){
+                    if(this.parking[i].name === name){
+                        return this.parking[i].overallColor;
                     }
                 } 
             },
@@ -374,7 +435,6 @@
                     
                 }
                 this.distanceRange = this.distanceMax - this.distanceMin;
-                console.log(this.distanceRange);
                 var percentage;
                 var minus;
                 for(i = 0;i<this.parking.length;i++){
