@@ -29,8 +29,8 @@
                         </div>
                         <div class="dropdown-item">
                             <span>Crime importance</span>
-                            <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="0" type="range">
-                            <span id="crimeOut">0</span>
+                            <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="10" type="range">
+                            <span id="crimeOut">10</span>
                         </div>
                         <div class="dropdown-item">
                             <button class="button is-dark" @click="setDistance">Submit Filters</button>
@@ -129,6 +129,7 @@
                 crime: [],
                 distance: 1,
                 price: 10,
+                crime:10,
                 crimeMax : 0,
                 crimeMin : 1000,
                 crimeRange : 0,
@@ -214,6 +215,7 @@
                 var distSlider = document.getElementById("distSlider");
                 
                 var priceSlider =  document.getElementById("priceSlider");
+                var crimeSlider = document.getElementById("crimeSlider");
                 if(this.distance != distSlider.value){
                     this.distance = distSlider.value;
                     this.performSearch();
@@ -225,6 +227,20 @@
                         var rate = this.parking[i].rates["price"][0].replace('£','');
                         if(parseFloat(this.parking[i].rates["price"][0].replace('£','')) > this.price){
                             this.parking.splice(i, 1);
+                        }
+                    }
+                }
+                if(this.crime != crimeSlider.value){
+                    this.crime = crimeSlider.value;
+                    var i;
+                    for(i = 0;i<this.crime.length;i++){
+                        console.log("crime");
+                        if(this.crime[i].percentage > (this.crime/10)){
+                            for(x = 0;x<this.parking.length;x++){
+                                if(this.parking[x].name === this.crime[i].name){
+                                    this.parking.splice(x, 1);
+                                }
+                            }
                         }
                     }
                 }
