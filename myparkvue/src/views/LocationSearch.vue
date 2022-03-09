@@ -46,82 +46,90 @@
                 </div>
                     <div class="level-right">
                         <div class="level-item">
-                            <button class="button is-dark">Map View</button>
+                            <button class="button is-dark" v-on:click="listView = !listView">ToggleMap View</button>
                         </div>
                     </div>
                 </nav>
             </div>
-        
-        <div class= "columns">
-            <div class="column is-12">
-                <div class="box  has-background-white-ter">
-                    <div class="columns">
-                        
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> Parking Zone Name</h3>
+        <transition name="fade">
+            <div v-if="listView">
+                <div class= "columns">
+                    <div class="column is-12">
+                        <div class="box  has-background-white-ter">
+                            <div class="columns">
+                                
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> Parking Zone Name</h3>
+                                    </div>
+                                
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> Number of spaces avaliable</h3>
+                                    </div>
+                                
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> Crimes in the area</h3>
+                                    </div>
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> Minimum price</h3>
+                                    </div>
+                                
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> Distance</h3>
+                                    </div>
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> More details</h3>
+                                    </div>
+                                    <div class="column">
+                                        <h3 class="is-underlined has-text-weight-medium"> Overall rating</h3>
+                                    </div>
                             </div>
-                        
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> Number of spaces avaliable</h3>
-                            </div>
-                        
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> Crimes in the area</h3>
-                            </div>
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> Minimum price</h3>
-                            </div>
-                        
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> Distance</h3>
-                            </div>
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> More details</h3>
-                            </div>
-                            <div class="column">
-                                <h3 class="is-underlined has-text-weight-medium"> Overall rating</h3>
-                            </div>
-                    </div>
+                        </div>
+                    </div>    
                 </div>
-            </div>    
-        </div>
-        <div class="columns is-multiline">
-        <div
-            class = "column is-12"
-            v-for="ParkingZone in parking"
-            v-bind:key="ParkingZone.id">
-            <div class="box has-background-grey-lighter	">
-                <div class = "columns is-multiline">
-                    <div
-                        class = "column">
-                        <h3 class="is-size-4">{{ParkingZone.name}}</h3>
-                    </div>
-                    <div
-                        class = "column has-text-justified" :style="{'background-color': getSpacesColour(ParkingZone.name) }">
-                        <p class="is-size-6 has-text-black">{{ParkingZone.numSpaces}}</p>
-                    </div>
-                    <div
-                        class = "column has-text-justified" :style="{'background-color': isSameColours(ParkingZone.name) }" >
-                        <p  class="is-size-6 has-text-black">{{isSame(ParkingZone.name)}}</p>
-                    </div>
-                    <div class = "column has-text-justified" :style="{'background-color': getPriceColour(ParkingZone.name) }">
-                        <p class="is-size-6 has-text-black">{{ParkingZone.rates["price"][0]}}</p>
-                    </div>
-                    <div class = "column" :style="{'background-color': getDistanceColour(ParkingZone.name) }">
-                        <p class="is-size-6 has-text-black">{{ParkingZone.distance.toFixed(2)}} miles</p>
-                    </div>
-                    
-                    <div
-                        class = "column">
-                        <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
-                    </div>
-                    <div class = "column"  :style="{'background-color': getOverallColour(ParkingZone.name) }">
-                        <p class="is-size-6 has-text-black">{{ParkingZone.overallRate.toFixed(2)}} </p>
+                <div class="columns is-multiline">
+                <div
+                    class = "column is-12"
+                    v-for="ParkingZone in parking"
+                    v-bind:key="ParkingZone.id">
+                    <div class="box has-background-grey-lighter	">
+                        <div class = "columns is-multiline">
+                            <div
+                                class = "column">
+                                <h3 class="is-size-4">{{ParkingZone.name}}</h3>
+                            </div>
+                            <div
+                                class = "column has-text-justified" :style="{'background-color': getSpacesColour(ParkingZone.name) }">
+                                <p class="is-size-6 has-text-black">{{ParkingZone.numSpaces}}</p>
+                            </div>
+                            <div
+                                class = "column has-text-justified" :style="{'background-color': isSameColours(ParkingZone.name) }" >
+                                <p  class="is-size-6 has-text-black">{{isSame(ParkingZone.name)}}</p>
+                            </div>
+                            <div class = "column has-text-justified" :style="{'background-color': getPriceColour(ParkingZone.name) }">
+                                <p class="is-size-6 has-text-black">{{ParkingZone.rates["price"][0]}}</p>
+                            </div>
+                            <div class = "column" :style="{'background-color': getDistanceColour(ParkingZone.name) }">
+                                <p class="is-size-6 has-text-black">{{ParkingZone.distance.toFixed(2)}} miles</p>
+                            </div>
+                            
+                            <div
+                                class = "column">
+                                <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
+                            </div>
+                            <div class = "column"  :style="{'background-color': getOverallColour(ParkingZone.name) }">
+                                <p class="is-size-6 has-text-black">{{ParkingZone.overallRate.toFixed(2)}} </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </transition>
+    <transition name="fade">
+        <div v-if="!listView">
+            <p> List View</p>
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -156,6 +164,7 @@
                 overallMax: 0,
                 overallMin: 100,
                 overallRange: 100,
+                listView: true,
             }
         },
         
