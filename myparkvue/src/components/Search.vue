@@ -1,4 +1,6 @@
+
 <template>
+
     <form method="get" action="/LocationSearch">
         <div class="field has-addons">
             <div class="control has-icons-left">
@@ -12,6 +14,8 @@
             </div>
         </div>
     </form>
+    
+    
 </template>
 
 <script>
@@ -27,14 +31,15 @@ export default {
                 )
             }
         );
+        
         autocomplete.addListener("place_changed", () => {
             console.log(autocomplete.getPlace());
             axios
                 .post('/api/v1/location/create/', {
                     'name': autocomplete.getPlace().name,
                     'address' : autocomplete.getPlace().adr_address,
-                    'lat' : autocomplete.getPlace().geometry.viewport.Qa.h,
-                    'long' : autocomplete.getPlace().geometry.viewport.ub.h,
+                    'lat' : autocomplete.getPlace().geometry.viewport.Sa.h,
+                    'long' : autocomplete.getPlace().geometry.viewport.wb.h,
                     })
                 .then(response => {
                     console.log(response.data);

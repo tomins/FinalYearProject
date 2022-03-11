@@ -50,9 +50,9 @@
                         </div>
                     </div>
                 </nav>
-            </div>
+            
         <transition name="fade">
-            <div v-if="listView">
+            <div v-show="listView">
                 <div class= "columns">
                     <div class="column is-12">
                         <div class="box  has-background-white-ter">
@@ -122,19 +122,27 @@
                         </div>
                     </div>
                 </div>
+                
+            </div>
+        </div>
+    
+    </transition>
+    <transition name="fade">
+        <div v-show="!listView">
+            <div id="map2" ref="maps" style="width:700px; height:500px; margin-left:80px;">
+                This is a map
             </div>
         </div>
     </transition>
-    <transition name="fade">
-        <div v-if="!listView">
-            <p> List View</p>
-        </div>
-    </transition>
+    
+    
+    </div>
 </template>
 
 <script>
     import axios from 'axios'
-    import bulmaSlider from '/node_modules/bulma-extensions/bulma-slider/dist/js/bulma-slider.min.js';
+    //import { Loader } from "@googlemaps/js-api-loader"
+    //import bulmaSlider from '/node_modules/bulma-extensions/bulma-slider/dist/js/bulma-slider.min.js';
     export default{
         
         name: 'LocationSearch',
@@ -167,8 +175,23 @@
                 listView: true,
             }
         },
+       
         
         mounted(){
+            
+            
+               
+                try {
+                    const map = new google.maps.Map(document.getElementById('map2'), {
+                    center: {lat: -34.397, lng: 150.644},
+                    zoom: 8
+                });
+                } catch (error) {
+                    console.log(error)
+                  
+                } 
+            
+            
             //start distance
             var distSlider = document.getElementById("distSlider");
             var distoutput = document.getElementById("distOut");
@@ -196,16 +219,18 @@
             let uri = window.location.search.substring(1)
             let params = new URLSearchParams(uri)
             if(params.get('location')){
-                console.log(params.getAll)
                 this.query = params.get('location')
                 this.performSearch()
             }
             else{
                 console.log("I am in the Location Search: the query was blank")
-            }
+            }  
+            
         },
         
         methods:{
+
+            
             
             async performSearch(){
                 
