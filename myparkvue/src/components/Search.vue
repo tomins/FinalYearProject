@@ -33,7 +33,7 @@ export default {
         );
         
         autocomplete.addListener("place_changed", () => {
-            console.log(autocomplete.getPlace());
+            console.log(autocomplete.getPlace().adr_address);
             axios
                 .post('/api/v1/location/create/', {
                     'name': autocomplete.getPlace().name,

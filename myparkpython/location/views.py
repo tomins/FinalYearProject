@@ -11,6 +11,7 @@ from django.db import models
 import json
 import urllib
 from django.http import HttpResponse
+from django.http import Http404
 import logging
 
 from rest_framework.views import APIView
@@ -24,6 +25,8 @@ class LatestLocationList(APIView):
         location = Location.objects.all()[0:1]
         serializer = LocationSerializer(location, many=True)
         return Response(serializer.data)
+
+
 
 @api_view(['POST'])
 def create(request):
@@ -207,5 +210,22 @@ def doLatLong(nameA):
     r = requests.get(f"{base_url}{urllib.parse.urlencode(parameters)}") 
     data = json.loads(r.content)
     return data.get("results")[0].get("geometry").get("location")
+
+@api_view(['POST'])
+def getLocation(request):
+    logging.basicConfig(level=logging.INFO)
+    query = request.data.get('query','')
+    query = query.split(",",1)[0]
+    logging.info("line 28" + request.data.get('query',''))
+    if query:
+        try:
+            location = Location.objects.filter(
+                name__contains = query
+            )
+             
+        except Location.DoesNotExist:
+            return Http404
+        serializer = LocationSerializer(location, many = True)
+        return Response(serializer.data)
 
 

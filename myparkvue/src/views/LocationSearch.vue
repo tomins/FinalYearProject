@@ -3,7 +3,7 @@
         <div class="columns is-multiline">
             <div class="column is-12">
                 <h1 class="title">Search</h1>
-                <h2 class="is-size-5 has-text-grey">Parking zones near: "{{query}}"</h2>
+                <h2 class="is-size-5 has-text-grey">Parking zones near: "{{this.query}}"</h2>
             </div>
         </div>
         <nav class="level">
@@ -154,6 +154,7 @@
                 parking: [],
                 parking2: [],
                 crime: [],
+                locationLatLong: [],
                 distance: 1,
                 price: 10,
                 crimeFilter: 10,
@@ -179,17 +180,7 @@
         
         mounted(){
             
-            
-               
-                try {
-                    const map = new google.maps.Map(document.getElementById('map2'), {
-                    center: {lat: -34.397, lng: 150.644},
-                    zoom: 8
-                });
-                } catch (error) {
-                    console.log(error)
-                  
-                } 
+                
             
             
             //start distance
@@ -225,13 +216,57 @@
             else{
                 console.log("I am in the Location Search: the query was blank")
             }  
+
             
         },
         
         methods:{
 
             
-            
+            async setMarkers(){//called from perform search so everything is loaded first
+                await axios
+                    .post('api/v1/location/getDetails',{
+                        'query':this.query
+                    })
+                    .then(response => {
+                        this.locationLatLong = response.data
+                        console.log(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                //create actual map
+                const map = new google.maps.Map(document.getElementById('map2'), {
+                    center: { lat: parseFloat(this.locationLatLong[0].long), lng: parseFloat(this.locationLatLong[0].lat) },
+                    zoom: 12
+                });
+                //end create map
+                
+                //location marker
+                const Locmarker = new google.maps.Marker({
+                    position: { lat: parseFloat(this.locationLatLong[0].long), lng: parseFloat(this.locationLatLong[0].lat) },
+                    map: map,
+                    title: this.locationLatLong[0].name
+                });
+                //end location marker
+
+                //start parkingZone markers
+                for (let i = 0; i < this.parking.length; i++) {
+                    var a = this.parking[i].latlong
+                    const b = a.split(",");
+                    var parkLat = b[0];
+                    var parkLong = b[1];
+                    parkLat = parkLat.split(":")[1]
+                    parkLong = parkLong.split(":")[1]
+                    const marker = new google.maps.Marker({
+                        position: { lat: parseFloat(parkLat), lng: parseFloat(parkLong) },
+                        map: map,
+                        icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png",
+                        title: this.parking[i].name
+                    });
+                }
+                //end parkingZone marker
+            },
             async performSearch(){
                 
                 await axios
@@ -241,11 +276,10 @@
                         })
                     .then(response => {
                         this.parking = response.data
-                        console.log(response.data)
                         for (let i = 0; i < this.parking.length; i++) {
                            this.getCrime({ address: this.parking[i].name });
                         }
-                        console.log(this.crime)
+                        this.setMarkers();
                         
                     })
                     .catch(error => {
