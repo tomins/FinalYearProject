@@ -91,7 +91,9 @@
 
                 <h2 class="subtitle">Map View</h2>
 
-                <p>Map Goes Here</p>
+                <div id="map2" ref="maps" style="width:100%; height:500px; margin-left:10px;">
+                Map Loading....
+                </div>
             </div>
         </div>
         
@@ -109,6 +111,7 @@ export default{
     },
     mounted(){
         this.getParkingDetail()
+       
     },
     methods:{
         async getParkingDetail(){
@@ -120,10 +123,30 @@ export default{
                 .then(response => {
                     this.parking  = response.data
                     console.log(response.data)
+                    this.createMap()
                 })
                 .catch(error => {
                     console.log(error)
                 })
+        },
+        createMap(){
+            
+            var a = this.parking[0].latlong
+            const b = a.split(",");
+            var parkLat = b[0];
+            var parkLong = b[1];
+            parkLat = parkLat.split(":")[1]
+            parkLong = parkLong.split(":")[1]
+            const map = new google.maps.Map(document.getElementById('map2'), {
+                center: { lat: parseFloat(parkLat), lng: parseFloat(parkLong) },
+                zoom: 14
+            });
+            const marker = new google.maps.Marker({
+                position: { lat: parseFloat(parkLat), lng: parseFloat(parkLong) },
+                map: map,
+                icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png",
+                title: this.parking[0].name
+                });
         }
     }
 }
