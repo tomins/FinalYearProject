@@ -3,8 +3,8 @@ current tasks:
   - DONE add a column to rate all parking zones against eachother (0.5)
   - DONE price filter - fix (0.5)
   - DONE NOT TESTED crime filter (1)
-  - Map view - all (0.5) 
-  -    - have basic map loading, need to center, add markers
+  - DONE Map view - all (0.5) 
+  -    - DONE have basic map loading, need to center, add markers
   - Map view - individual (0.25)
   - More parking zones (1-2)
   - User customizations
