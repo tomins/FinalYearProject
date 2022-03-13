@@ -26,6 +26,8 @@ def ParkingZoneByLocation(request):
     query = query.split(",",1)[0]
     if query:
         location = Location.objects.get(
+            address__contains = query
+        )|Location.objects.get(
             name__contains = query
         )
         parkingZone = ParkingZone.objects.filter(
@@ -40,13 +42,14 @@ def ParkingByDistance(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
     query = query.split(",",1)[0]
-    location = Location.objects.get(
-        name__contains = query
-    )
+    logging.info("full query name: " + request.data.get('query',''))
+    logging.info("split query name: " + query)
+    location = Location.objects.filter(address__contains = query)|Location.objects.filter(name__contains = query)
+    logging.info("database name: " + location.values('name')[0]['name'])
     distance = request.data.get('distance','')
     
-    latLoc = location.long
-    longLoc = location.lat
+    latLoc = location.values('long')[0]['long']
+    longLoc = location.values('lat')[0]['lat']
     parkingZone = ParkingZone.objects.all()
     parkingZoneFinal = []
     for p in parkingZone:

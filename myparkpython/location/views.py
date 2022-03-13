@@ -66,11 +66,15 @@ def search(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
     query = query.split(",",1)[0]
-    logging.info(query)
+    logging.info("full query name: " + request.data.get('query',''))
+    logging.info("split query name: " + query)
     if query:
         location = Location.objects.filter(
+            address__contains = query
+        )|Location.objects.filter(
             name__contains = query
         )
+        logging.info("database name: " + location.values('name')[0]['name'])
         getParkingZoneQ() 
         return Response(ParkingByDistance(request))
 
@@ -216,12 +220,15 @@ def getLocation(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
     query = query.split(",",1)[0]
-    logging.info("line 28" + request.data.get('query',''))
+    
     if query:
         try:
             location = Location.objects.filter(
+                address__contains = query
+            )|Location.objects.filter(
                 name__contains = query
             )
+            
              
         except Location.DoesNotExist:
             return Http404
