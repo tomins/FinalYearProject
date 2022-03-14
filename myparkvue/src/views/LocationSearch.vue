@@ -1,9 +1,12 @@
 <template>
     <div class="page-search">
         <div class="columns is-multiline">
-            <div class="column is-12">
+            <div class="column">
                 <h1 class="title">Search</h1>
-                <h2 class="is-size-5 has-text-grey">Parking zones near: "{{this.query}}"</h2>
+                <h2 class="is-size-5 has-text-grey">Parking zones near: {{this.query}}</h2>
+            </div>
+            <div class="column" v-if="!$store.state.token == ''">
+                <button class="button is-dark" v-on:click="this.addFavoriteLocation()">Add location as a favorite</button>
             </div>
         </div>
         <nav class="level">
@@ -466,6 +469,7 @@
                 for(i = 0;i<this.parking.length;i++){
                     minus = this.parking[i].numSpaces - this.spacesMin;
                     percentage = minus/this.spacesRange;
+                    percentage = 1 - percentage;
                     this.parking[i].percentage = percentage;
                     this.parking[i].colour = this.getColour(percentage);
                 }
@@ -539,9 +543,7 @@
                 }
             },
             sortByRating(){
-                console.log(this.parking[2].overallPer)
                 this.parking.sort(function(a, b){return a.overallPer - b.overallPer});
-                console.log(this.parking[2].overallPer)
             },
             getColour(percentage){
                 if(percentage <= 0.1){
@@ -575,7 +577,19 @@
                     return '#E53935'
                 }
                 
-            }
+            },
+            async addFavoriteLocation(){
+                await axios
+                    .post('/api/v1/user/favorite/', {
+                        'query': this.query,
+                        })
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
         }
 
     }
