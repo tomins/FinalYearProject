@@ -402,6 +402,7 @@
                 var i;
                 this.crimeRating()
                 this.combinedRating()
+                this.sortByRating()
                 for(i = 0;i<this.crime.length;i++){
                     if(this.crime[i].name === name){
                         return this.crime[i].colour;
@@ -536,6 +537,11 @@
                     this.parking[i].distancePercentage = percentage;
                     this.parking[i].distanceColour = this.getColour(percentage);
                 }
+            },
+            sortByRating(){
+                console.log(this.parking[2].overallPer)
+                this.parking.sort(function(a, b){return a.overallPer - b.overallPer});
+                console.log(this.parking[2].overallPer)
             },
             getColour(percentage){
                 if(percentage <= 0.1){
