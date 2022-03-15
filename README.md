@@ -14,6 +14,6 @@ current tasks:
     - Favorite locations (2)
     - Type of vehicle (1)
   - More parking zones (1-2)
- 
+  - add more details to the mapview, colour, price etc
   
    
