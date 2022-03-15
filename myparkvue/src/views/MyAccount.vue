@@ -26,6 +26,9 @@ export default{
 
             this.$router.push('/')
         }
-    }
+    },
+    mounted(){
+        document.title = 'MyAccount | MyPark'
+    },
 }
 </script>

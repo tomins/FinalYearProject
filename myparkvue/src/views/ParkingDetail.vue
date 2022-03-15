@@ -110,6 +110,7 @@ export default{
         }
     },
     mounted(){
+        document.title = 'Parking Detail | MyPark'
         this.getParkingDetail()
        
     },

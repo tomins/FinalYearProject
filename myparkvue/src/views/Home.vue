@@ -57,6 +57,9 @@ export default {
   components: { 
     Search
   },
+  mounted(){
+    document.title = 'Home | MyPark'
+  },
   
 }
 </script>

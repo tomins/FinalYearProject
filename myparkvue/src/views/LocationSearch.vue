@@ -182,7 +182,7 @@
        
         
         mounted(){
-            
+            document.title = 'Parking Zones | MyPark'
                 
             
             
