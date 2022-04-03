@@ -13,7 +13,9 @@ current tasks:
   - User customizations
     - Favorite locations (2)
     - Type of vehicle (1)
-  - More parking zones (1-2)
- 
+  - add more details to the mapview, colour, price etc
+  - get a better home page with more info
+  - add a better myaccount page with all details possible
+  - 
   
    
