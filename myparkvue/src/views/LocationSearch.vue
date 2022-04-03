@@ -265,7 +265,7 @@
                         position: { lat: parseFloat(parkLat), lng: parseFloat(parkLong) },
                         map: map,
                         icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png",
-                        title: this.parking[i].name
+                        title: this.parking[i].name + " \nSpaces: " + String(this.parking[i].numSpaces) + " \nDistance: " + String(this.parking[i].distance.toFixed(2)) + " miles"
                     });
                 }
                 //end parkingZone marker
@@ -580,7 +580,7 @@
             },
             async addFavoriteLocation(){
                 await axios
-                    .post('/api/v1/user/favorite/', {
+                    .post('/api/v1/favoritelocation/new/', {
                         'query': this.query,
                         })
                     .then(response => {
