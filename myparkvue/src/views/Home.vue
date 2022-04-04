@@ -15,43 +15,40 @@
        <Search> </Search>
        </div>
     </div>
-    
-    
-     
-   
-
-
-
-    <!-- <div class="columns is-multiline">
-      <div class="column is-12">
-        <h2 class="is-size-2 has-text-centered"> Latest Products</h2>
-      </div>
-      <div
-        class = "column is-3"
-        v-for="product in latestProducts"
-        v-bind:key="product.id">
-        <div class="box">
-          <figure class="image mb-4">
-            <img bind:src="product.get_thumbnail">
-          </figure>
-          <h3 class="is-size-4">{{product.name}}</h3>
-          <p class="is-size-6 has-text-grey">€{{product.price}}</p>
-          View details
+    <div v-if="!$store.state.token == ''" class="columns is-centered is-mobile">
+      <div class="column is-half is-offset-4">
+        <div class="dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+              <span>Your Favorite Locations</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content"
+              v-for="Favoritelocation in favoriteLocations"
+              v-bind:key="Favoritelocation.id">
+                <div class="dropdown-item">
+                  <router-link ref="location" v-bind:to="`/LocationSearch?location=`+ Favoritelocation.location.name + ', ' + Favoritelocation.location.address">{{Favoritelocation.location.name}}</router-link>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
-    
-    </div>
-      -->
+    </div>    
   </div>
 </template>
 
 <script>
 import Search from '@/components/Search.vue'
+import axios from 'axios'
 export default {
   name: 'Home',
   data(){
     return {
-
+      favoriteLocations: [],
     }
   },
   components: { 
@@ -59,8 +56,22 @@ export default {
   },
   mounted(){
     document.title = 'Home | MyPark'
+    this.getFavorites();
   },
-  
+  methods:{
+    async getFavorites(){
+      await axios
+        .get('api/v1/get-favorite/',{
+          })
+          .then(response => {
+          this.favoriteLocations = response.data
+          console.log(response.data)
+          })
+          .catch(error => {
+          console.log(error)
+          })
+    }
+  },
 }
 </script>
 

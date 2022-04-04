@@ -217,7 +217,8 @@
                 this.performSearch()
             }
             else{
-                console.log("I am in the Location Search: the query was blank")
+                this.query = params
+                this.performSearch()
             }  
 
             

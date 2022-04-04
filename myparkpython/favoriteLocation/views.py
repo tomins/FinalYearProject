@@ -15,11 +15,13 @@ from .serializers import FavoriteLocationSerializer
 import logging
 
 class FavoriteList(APIView):
+    logging.basicConfig(level=logging.INFO)
     authentication_classes = [authentication.TokenAuthentication]
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, format=None):
         favoriteLocations = FavoriteLocation.objects.filter(user=request.user)
+        logging.info("user: " + favoriteLocations[0].location.name)
         serializer = FavoriteLocationSerializer(favoriteLocations, many=True)
         return Response(serializer.data)
 # Create your views here.

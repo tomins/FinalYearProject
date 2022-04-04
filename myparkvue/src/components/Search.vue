@@ -10,7 +10,7 @@
                 </span>
             </div>
             <div class="control">
-            <button class="button is-primary is-large">Search</button><!--@click="sendLocation" -->
+            <button class="button is-primary is-large">Search</button>
             </div>
         </div>
     </form>

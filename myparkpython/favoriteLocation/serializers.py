@@ -10,6 +10,5 @@ class FavoriteLocationSerializer(serializers.ModelSerializer):
         model = FavoriteLocation
         fields = (
             "id",
-            "email",
             "location"
         )
