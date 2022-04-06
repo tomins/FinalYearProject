@@ -11,11 +11,11 @@ current tasks:
   - DONE make the front end display results based off overall rating - (0.5)
   - DONE Fix the filters, the more parking spaces the better, not the worst
   - User customizations
-    - Favorite locations (2)
+    - DONE Favorite locations (2)
     - Type of vehicle (1)
-  - add more details to the mapview, colour, price etc
+  - add more details to the mapview- colour(NOT DONE), price(DONE) etc
   - get a better home page with more info
   - add a better myaccount page with all details possible
-  - 
+  - change favorite button to home page
   
    
