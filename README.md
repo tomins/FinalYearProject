@@ -12,10 +12,16 @@ current tasks:
   - DONE Fix the filters, the more parking spaces the better, not the worst
   - User customizations
     - DONE Favorite locations (2)
-    - Type of vehicle (1)
+    - add a better myaccount page with all details possible
   - add more details to the mapview- colour(NOT DONE), price(DONE) etc
   - get a better home page with more info
-  - add a better myaccount page with all details possible
-  - change favorite button to home page
+  - check for real time info avaliability
+  - create a link to the booking system
+  - add better theming all over
+  - change favorite to be a star and change location to beside the name
+  - also check if location is already in the favorites
+  - Get a logo of some sort and do the page headers
+  - Add toast's for appropriate things
+  - 
   
    
