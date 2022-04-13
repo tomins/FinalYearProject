@@ -22,6 +22,6 @@ current tasks:
   - also check if location is already in the favorites
   - Get a logo of some sort and do the page headers
   - Add toast's for appropriate things
-  - 
+  - Fix error with not all searches working
   
    
