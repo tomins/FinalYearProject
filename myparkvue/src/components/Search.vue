@@ -16,6 +16,7 @@
     </form>
     
     
+    
 </template>
 
 <script>
@@ -48,6 +49,6 @@ export default {
                     console.log(error)
                 })
         })
-    }
+    },
 }
 </script>

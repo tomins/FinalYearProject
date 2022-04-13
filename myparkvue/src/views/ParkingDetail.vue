@@ -6,7 +6,10 @@
                 v-bind:key="ParkingZone.id">
                 
                 <div class="tile is-parent is-vertical is-primary box ">
-                <h3 class="is-size-2 is-underlined">{{ParkingZone.name}}</h3>
+                    <h3 class="is-size-2 is-underlined">{{ParkingZone.name}}</h3>
+                </div>
+                <div class="tile is-child is-vertical box">
+                    <a class="button" v-bind:href="bookingLink(ParkingZone.name)"> Booking</a>
                 </div>
                 <div class="tile is-child is-vertical notification box">
                 <span class="subtitle is-size-3">
@@ -88,13 +91,15 @@
                 
             </div>
             <div class="column is-6">
-
+                
                 <h2 class="subtitle">Map View</h2>
 
                 <div id="map2" ref="maps" style="width:100%; height:500px; margin-left:10px;">
                 Map Loading....
                 </div>
             </div>
+
+            
         </div>
         
     </div> 
@@ -117,13 +122,11 @@ export default{
     methods:{
         async getParkingDetail(){
             const name = this.$route.params.name
-            console.log(name)
 
             await axios
                 .post('/api/v1/ParkingZone/ParkingDetail/', {'query': name})
                 .then(response => {
                     this.parking  = response.data
-                    console.log(response.data)
                     this.createMap()
                 })
                 .catch(error => {
@@ -148,6 +151,16 @@ export default{
                 icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/parking_lot_maps.png",
                 title: this.parking[0].name
                 });
+        },
+
+        bookingLink(name){
+            console.log("name" + name)
+            const nm = name.split("Q-Park")
+            console.log(nm[1])
+            let n = nm[1].replace(" ", "-")
+            console.log(n)
+
+            return "https://www.q-park.co.uk/en-gb/cities/london/" + n
         }
     }
 }

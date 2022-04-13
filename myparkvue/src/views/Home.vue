@@ -11,7 +11,7 @@
       </div>
     </section>
     <div class="columns is-centered is-mobile">
-      <div class="column is-half is-offset-3">
+      <div class="column is-half is-offset-2">
        <Search> </Search>
        </div>
     </div>
