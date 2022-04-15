@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <section class="hero is-medium is-dark mb-6">
+    <section class="hero is-medium mb-6" :style="{'background-color': '#bdfff6' }">
       <div class = "hero-body has-text-centered">
-        <p class = "title mb-6">
+        <p class = "title mb-6" :style="{'color': '#e23c52' }">
           Welcome to my park
         </p>
-        <p class="subtitle">
+        <p class="subtitle" :style="{'color': '#e23c52' }">
           The best parking app on the web!
         </p>
       </div>
@@ -19,7 +19,7 @@
       <div class="column is-half is-offset-4">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"  :style="{'background-color': '#bdfff6', 'color': '#e23c52' }">
               <span>Your Favorite Locations</span>
               <span class="icon is-small">
                 <i class="fas fa-angle-down" aria-hidden="true"></i>

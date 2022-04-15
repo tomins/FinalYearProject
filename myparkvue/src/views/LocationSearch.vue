@@ -2,10 +2,10 @@
     <div class="page-search">
         <div class="columns is-multiline">
             <div class="column">
-                <h1 class="title">Search</h1>
-                <h2 class="is-size-5 has-text-grey"><strong>Parking zones near:</strong> {{this.query}}
-                    <button class="button is-outlined is-info" v-if="!$store.state.token == ''" v-on:click="this.addFavoriteLocation()">
-                        <span class="icon is-left">
+                <h1 class="title"  :style="{'color': '#bdfff6' }">Search</h1>
+                <h2 class="is-size-5"  :style="{'color': '#bdfff6' }"><strong  :style="{'color': '#bdfff6' }">Parking zones near:</strong> {{this.query}}
+                    <button class="button is-outlined is-info" v-if="!$store.state.token == ''" v-on:click="this.addFavoriteLocation()" :style="{'background-color': '#bdfff6' }">
+                        <span class="icon is-left" >
                             <i v-if="isFavorite" class="fas fa-minus-circle"></i>
                             <i v-else class="far fa-star"></i>
                         </span>
@@ -18,33 +18,33 @@
                 <div class="level-item">
                     <div class="dropdown is-hoverable">
                         <div class="dropdown-trigger">
-                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"  :style="{'color': '#e23c52', 'background-color': '#bdfff6' }">
                             <span>Filters</span>
-                            <span class="icon is-small">
+                            <span class="icon is-small" :style="{'background-color': '#bdfff6' }">
                                 <i class="fas fa-angle-down" aria-hidden="true"></i>
                             </span>
                         </button>
                     </div>
                 
                             <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
+                                <div class="dropdown-content" :style="{'background-color': '#bdfff6' }">
                                     <div class="dropdown-item">
-                                        <span>Max Distance (miles)</span>
+                                        <span :style="{'color': '#e23c52' }">Max Distance (miles)</span>
                                         <input id="distSlider" class="slider has-output-tooltip is-fullwidth" step="0.2" min="0.2" max="2" value="1" type="range">
                                         <span id="distOut">0.2</span>
                                     </div>
                                     <div class="dropdown-item">
-                                        <span>Max Price (£)</span>
+                                        <span :style="{'color': '#e23c52' }">Max Price (£)</span>
                                         <input id="priceSlider" class="slider has-output-tooltip is-fullwidth" step="0.01" min="0" max="10" value="10" type="range">
                                         <span id="priceOut">10</span>
                                     </div>
                                     <div class="dropdown-item">
-                                        <span>Crime importance</span>
+                                        <span :style="{'color': '#e23c52' }">Crime importance</span>
                                         <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="10" type="range">
                                         <span id="crimeOut">10</span>
                                     </div>
                                     <div class="dropdown-item">
-                                        <button class="button is-dark" @click="setDistance">Submit Filters</button>
+                                        <button class="button" @click="setDistance" :style="{'color': '#bdfff6', 'background-color': '#e23c52' }">Submit Filters</button>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                 </div>
                     <div class="level-right">
                         <div class="level-item">
-                            <button class="button is-dark" v-on:click="listView = !listView">ToggleMap View</button>
+                            <button class="button" v-on:click="listView = !listView" :style="{'background-color': '#bdfff6' }"><strong :style="{'color': '#e23c52' }">ToggleMap View</strong></button>
                         </div>
                     </div>
                 </nav>
@@ -62,8 +62,8 @@
             <div v-show="listView">
                 <div class= "columns">
                     <div class="column is-12">
-                        <div class="box  has-background-white-ter">
-                            <div class="columns">
+                        <div class="box" :style="{'background-color': '#bdfff6' }">
+                            <div class="columns" :style="{'color': '#e23c52' }">
                                 
                                     <div class="column">
                                         <h3 class="is-underlined has-text-weight-medium"> Parking Zone Name</h3>
@@ -97,11 +97,10 @@
                 <div
                     class = "column is-12"
                     v-for="ParkingZone in parking"
-                    v-bind:key="ParkingZone.id">
-                    <div class="box has-background-grey-lighter	">
-                        <div class = "columns is-multiline">
-                            <div
-                                class = "column">
+                    v-bind:key="ParkingZone.id" >
+                    <div class="box"  :style="{'background-color': '#bdfff6' }">
+                        <div class = "columns is-multiline" :style="{'color': '#e23c52' }">
+                            <div class = "column">
                                 <h3 class="is-size-4">{{ParkingZone.name}}</h3>
                             </div>
                             <div
@@ -119,9 +118,8 @@
                                 <p class="is-size-6 has-text-black">{{ParkingZone.distance.toFixed(2)}} miles</p>
                             </div>
                             
-                            <div
-                                class = "column">
-                                <router-link v-bind:to="ParkingZone.name" class="button is-dark mt-4">View details</router-link>
+                            <div class = "column">
+                                <router-link v-bind:to="ParkingZone.name" class="button mt-4" :style="{'background-color': '#e23c52', 'color': '#bdfff6' }">View details</router-link>
                             </div>
                             <div class = "column"  :style="{'background-color': getOverallColour(ParkingZone.name) }">
                                 <p class="is-size-6 has-text-black">{{ParkingZone.overallRate.toFixed(2)}} </p>
