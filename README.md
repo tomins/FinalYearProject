@@ -16,12 +16,12 @@ current tasks:
   - add more details to the mapview- colour(NOT DONE), price(DONE) etc
   - get a better home page with more info
   - check for real time info avaliability
-  - create a link to the booking system
+  - DONE create a link to the booking system
   - add better theming all over
   - change favorite to be a star and change location to beside the name
   - also check if location is already in the favorites
   - Get a logo of some sort and do the page headers
   - Add toast's for appropriate things
-  - 
+  - Fix error with not all searches working
   
    
