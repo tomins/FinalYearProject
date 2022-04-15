@@ -42,14 +42,14 @@ def ParkingByDistance(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
     query = query.split(",",1)[0]
-    logging.info("full query name: " + request.data.get('query',''))
-    logging.info("split query name: " + query)
+    logging.info("parking by distance: " + query)
     location = Location.objects.filter(address__contains = query)|Location.objects.filter(name__contains = query)
-    logging.info("database name: " + location.values('name')[0]['name'])
+    logging.info("database name long: " + location.values('long')[0]['long'])
+    logging.info("database name lat: " + location.values('lat')[0]['lat'])
     distance = request.data.get('distance','')
     
-    latLoc = location.values('long')[0]['long']
-    longLoc = location.values('lat')[0]['lat']
+    longLoc = location.values('long')[0]['long']
+    latLoc = location.values('lat')[0]['lat']
     parkingZone = ParkingZone.objects.all()
     parkingZoneFinal = []
     for p in parkingZone:
@@ -86,7 +86,7 @@ def checkDistance(distance, latLoc, longLoc, lat2, long2):
 def ParkingDetail(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
-    logging.info("line 28" + request.data.get('query',''))
+    logging.info("88" + request.data.get('query',''))
     if query:
         try:
             parkingZone = ParkingZone.objects.filter(

@@ -1,3 +1,4 @@
+from ast import Str
 from http.client import ImproperConnectionState
 from urllib import request
 from django.shortcuts import render
@@ -35,15 +36,17 @@ def create(request):
     soup= BeautifulSoup(r, 'html.parser')
     name = request.data.get('name','')
 
-    try:
-        location = Location.objects.filter(
-                address__contains = name
-            )|Location.objects.filter(
-                name__contains = name
-            )
-        logging.info("the location has been found: " + name)
+    
+    location = Location.objects.filter(
+            address__contains = name
+        )|Location.objects.filter(
+            name__contains = name
+        )
+    if(location.count() >0):
+        logging.info("the location has been found: " + location['name'])
         return HttpResponse(status=200)
-    except Location.DoesNotExist:
+    
+    else:
         logging.info("name: " + name)
         address = ""
         for x in soup.find_all('span',"street-address"):
@@ -67,8 +70,10 @@ def create(request):
                 address = address,
                 postcode = postcode
             )
-            #serializer = LocationSerializer(obj, many=True)
-            return HttpResponse(status=200)
+            logging.info(obj)
+            serializer = LocationSerializer(obj)
+            return Response(serializer.data)
+        
         
     
 
@@ -77,15 +82,14 @@ def search(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
     query = query.split(",",1)[0]
-    logging.info("full query name: " + request.data.get('query',''))
-    logging.info("split query name: " + query)
+    logging.info("search: " + query)
     if query:
         location = Location.objects.filter(
-            address__contains = query
-        )|Location.objects.filter(
             name__contains = query
+        )|Location.objects.filter(
+            address__contains = query
         )
-        logging.info("database name: " + location.values('name')[0]['name'])
+        #logging.info("size: " + str(location.count()))
         getParkingZoneQ() 
         return Response(ParkingByDistance(request))
 

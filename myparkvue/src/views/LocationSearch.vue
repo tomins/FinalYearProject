@@ -3,10 +3,14 @@
         <div class="columns is-multiline">
             <div class="column">
                 <h1 class="title">Search</h1>
-                <h2 class="is-size-5 has-text-grey">Parking zones near: {{this.query}}</h2>
-            </div>
-            <div class="column" v-if="!$store.state.token == ''">
-                <button class="button is-dark" v-on:click="this.addFavoriteLocation()">Add location as a favorite</button>
+                <h2 class="is-size-5 has-text-grey"><strong>Parking zones near:</strong> {{this.query}}
+                    <button class="button is-outlined is-info" v-if="!$store.state.token == ''" v-on:click="this.addFavoriteLocation()">
+                        <span class="icon is-left">
+                            <i v-if="isFavorite" class="fas fa-minus-circle"></i>
+                            <i v-else class="far fa-star"></i>
+                        </span>
+                    </button>
+                </h2>
             </div>
         </div>
         <nav class="level">
@@ -151,11 +155,9 @@
         name: 'LocationSearch',
         data(){
             return{
-                locations:[],
                 query: '',
                 latlng: '',
                 parking: [],
-                parking2: [],
                 crime: [],
                 locationLatLong: [],
                 distance: 1,
@@ -177,6 +179,8 @@
                 overallMin: 100,
                 overallRange: 100,
                 listView: true,
+                isFavorite: false,
+                favoriteLocations: [],
             }
         },
        
@@ -219,7 +223,9 @@
             else{
                 this.query = params
                 this.performSearch()
-            }  
+            } 
+
+            this.checkFavorite()
 
             
         },
@@ -580,17 +586,39 @@
                 
             },
             async addFavoriteLocation(){
-                await axios
-                    .post('/api/v1/favoritelocation/new/', {
-                        'query': this.query,
+                if(this.isFavorite != true){
+                    await axios
+                        .post('/api/v1/favoritelocation/new/', {
+                            'query': this.query,
+                            })
+                        .then(response => {
+                            console.log(response)
                         })
+                        .catch(error => {
+                            console.log(error)
+                        })
+                }
+            },
+
+            async checkFavorite(){
+                await axios
+                    .get('api/v1/get-favorite/',{
+                    })
                     .then(response => {
-                        console.log(response)
+                    this.favoriteLocations = response.data
                     })
                     .catch(error => {
-                        console.log(error)
+                    console.log(error)
                     })
+
+                const smallQuery = this.query.split(",");
+                for (let i = 0; i < this.favoriteLocations.length; i++) {
+                    if(this.favoriteLocations[i].location.name === smallQuery[0]){
+                        this.isFavorite = true
+                    }
+                }
             },
+            
         }
 
     }

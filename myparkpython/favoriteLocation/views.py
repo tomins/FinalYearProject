@@ -21,7 +21,7 @@ class FavoriteList(APIView):
 
     def get(self, request, format=None):
         favoriteLocations = FavoriteLocation.objects.filter(user=request.user)
-        logging.info("user: " + favoriteLocations[0].location.name)
+        #logging.info("get in favorite location: " + favoriteLocations[0].location.name)
         serializer = FavoriteLocationSerializer(favoriteLocations, many=True)
         return Response(serializer.data)
 # Create your views here.
@@ -32,14 +32,34 @@ class FavoriteList(APIView):
 def newFavorite(request):
     logging.basicConfig(level=logging.INFO)
     query = request.data.get('query','')
+    q2 = query.split(",",1)[0]
+    logging.info("new Favorite: " + q2)
+    if query:
+        location = Location.objects.filter(
+                address__contains = q2
+            )|Location.objects.get(
+                name__contains = q2
+            )
+    obj, park = FavoriteLocation.objects.get_or_create(
+        user = request.user,
+        location = location)
+    return HttpResponse(status=200)
+
+
+@api_view(['PUT'])
+@authentication_classes([authentication.TokenAuthentication])
+@permission_classes([permissions.IsAuthenticated])
+def deleteFavorite(request):
+    logging.basicConfig(level=logging.INFO)
+    query = request.data.get('query','')
     query = query.split(",",1)[0]
-    logging.info("full query name: " + request.data.get('query',''))
-    logging.info("split query name: " + query)
+    logging.info("delete favorite: " + query)
     if query:
         location = Location.objects.get(
             name__contains = query
         )
-    obj, park = FavoriteLocation.objects.get_or_create(
+    park = FavoriteLocation.objects.get(
         user = request.user,
         location = location)
+    park.delete()
     return HttpResponse(status=200)

@@ -34,16 +34,16 @@ export default {
         );
         
         autocomplete.addListener("place_changed", () => {
-            console.log(autocomplete.getPlace().adr_address);
+            console.log(autocomplete.getPlace().geometry.location.lat());
             axios
                 .post('/api/v1/location/create/', {
                     'name': autocomplete.getPlace().name,
                     'address' : autocomplete.getPlace().adr_address,
-                    'lat' : autocomplete.getPlace().geometry.viewport.Sa.h,
-                    'long' : autocomplete.getPlace().geometry.viewport.wb.h,
+                    'lat' : autocomplete.getPlace().geometry.location.lat(),
+                    'long' : autocomplete.getPlace().geometry.location.lng(),
                     })
                 .then(response => {
-                    console.log(response.data);
+                    console.log(response);
                 })
                 .catch(error => {
                     console.log(error)
