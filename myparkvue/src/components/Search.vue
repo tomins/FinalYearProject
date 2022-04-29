@@ -4,13 +4,13 @@
     <form method="get" action="/LocationSearch">
         <div class="field has-addons">
             <div class="control has-icons-left">
-                <input name="location" type="text" class="input is-large" placeholder="Search Address" ref="location" :style="{'background-color': '#bdfff6', 'color': '#e23c52' }">
+                <input name="location" type="text" class="input is-large" placeholder="Search for a place" ref="location" >
                 <span class="icon is-left">
                     <i class="fas fa-search"></i>
                 </span>
             </div>
             <div class="control">
-            <button class="button is-large" :style="{'background-color': '#bdfff6', 'color': '#e23c52' }">Search</button>
+            <button class="button is-large" :style="{'background-color': '#000000', 'color': '#ffffff' }">Search</button>
             </div>
         </div>
     </form>

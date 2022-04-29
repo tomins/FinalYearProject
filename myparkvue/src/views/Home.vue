@@ -1,12 +1,18 @@
 <template>
   <div class="home">
-    <section class="hero is-medium mb-6" :style="{'background-color': '#bdfff6' }">
+    <section class="hero is-medium mb-6" :style="{'background-color': '#000000' }">
       <div class = "hero-body has-text-centered">
-        <p class = "title mb-6" :style="{'color': '#e23c52' }">
+        <p class = "title mb-6" :style="{'color': '#ffffff' }">
           Welcome to my park
         </p>
-        <p class="subtitle" :style="{'color': '#e23c52' }">
+        <p class="subtitle" :style="{'color': '#ffffff' }">
           The best parking app on the web!
+        </p>
+        <p class="subtitle" :style="{'color': '#ffffff' }">
+          Simply type in where you want to go and we will find you the best parking space possible!
+        </p>
+        <p class="subtitle" :style="{'color': '#ffffff' }">
+          If you would like to get even more features then log in to you're account or create one if you haven't already, its free!
         </p>
       </div>
     </section>
@@ -19,7 +25,7 @@
       <div class="column is-half is-offset-4">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
-            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"  :style="{'background-color': '#bdfff6', 'color': '#e23c52' }">
+            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"  :style="{'background-color': '#000000', 'color': '#ffffff' }">
               <span>Your Favorite Locations</span>
               <span class="icon is-small">
                 <i class="fas fa-angle-down" aria-hidden="true"></i>

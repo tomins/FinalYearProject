@@ -1,8 +1,8 @@
 <template>
-  <div id="wrapper" :style="{'background-color': '#FF8C00' }">
+  <div id="wrapper" :style="{'background-color': '#888c8d' }">
     <nav class="navbar" :style="{'background-color': '#000000' }">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"><strong :style="{'color': '#FF8C00' }">My Park</strong></router-link>
+        <router-link to="/" class="navbar-item"><strong :style="{'color': '#ffffff' }">My Park</strong></router-link>
         <a class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar-menu" @click="showMobileMenu = !showMobileMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -15,10 +15,10 @@
           <div class="navbar-item">
             <div class="buttons">
               <template v-if="!$store.state.token == ''" >
-                <router-link to="/my-account" class="button" :style="{'background-color': '#FF8C00' }"><strong :style="{'color': '#000000' }">My Account</strong></router-link>
+                <router-link to="/my-account" class="button" :style="{'background-color': '#888c8d' }"><strong :style="{'color': '#000000' }">My Account</strong></router-link>
               </template>
               <template v-else>
-                <router-link to="/log-in" class="button is-dark">Login</router-link>
+                <router-link to="/log-in" class="button" :style="{'background-color': '#888c8d', 'color' : '#000000' }"><strong>Login</strong></router-link>
               </template>
               
             </div>
@@ -32,10 +32,10 @@
     
     <footer class="footer" :style="{'background-color': '#000000' }">
       <template v-if="!$store.state.token == ''" >
-        <p class="has-text-centered" :style="{'color': '#FF8C00' }">Thanks for logging in!</p>
+        <p class="has-text-centered" :style="{'color': '#ffffff' }">Thanks for logging in!</p>
       </template>
       <template v-else>
-        <p class="has-text-centered" :style="{'color': '#FF8C00' }">Log in for more!</p>
+        <p class="has-text-centered" :style="{'color': '#ffffff' }">Log in for more!</p>
       </template>
       
     </footer>

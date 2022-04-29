@@ -2,9 +2,9 @@
     <div class="page-search">
         <div class="columns is-multiline">
             <div class="column">
-                <h1 class="title"  :style="{'color': '#bdfff6' }">Search</h1>
-                <h2 class="is-size-5"  :style="{'color': '#bdfff6' }"><strong  :style="{'color': '#bdfff6' }">Parking zones near:</strong> {{this.query}}
-                    <button class="button is-outlined is-info" v-if="!$store.state.token == ''" v-on:click="this.addFavoriteLocation()" :style="{'background-color': '#bdfff6' }">
+                <h1 class="title"  :style="{'color': '#ffffff' }">Search</h1>
+                <h2 class="is-size-5"  :style="{'color': '#ffffff' }"><strong  :style="{'color': '#ffffff' }">Parking zones near:</strong> {{this.query}}
+                    <button class="button is-outlined is-info" v-if="!$store.state.token == ''" v-on:click="this.addFavoriteLocation()" :style="{'background-color': '#ffffff' }">
                         <span class="icon is-left" >
                             <i v-if="isFavorite" class="fas fa-minus-circle"></i>
                             <i v-else class="far fa-star"></i>
@@ -18,33 +18,33 @@
                 <div class="level-item">
                     <div class="dropdown is-hoverable">
                         <div class="dropdown-trigger">
-                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"  :style="{'color': '#e23c52', 'background-color': '#bdfff6' }">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu"  :style="{'color': '#ffffff', 'background-color': '#000000' }">
                             <span>Filters</span>
-                            <span class="icon is-small" :style="{'background-color': '#bdfff6' }">
+                            <span class="icon is-small" :style="{'background-color': '#000000' }">
                                 <i class="fas fa-angle-down" aria-hidden="true"></i>
                             </span>
                         </button>
                     </div>
                 
                             <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                                <div class="dropdown-content" :style="{'background-color': '#bdfff6' }">
+                                <div class="dropdown-content" :style="{'background-color': '#000000' }">
                                     <div class="dropdown-item">
-                                        <span :style="{'color': '#e23c52' }">Max Distance (miles)</span>
+                                        <span :style="{'color': '#ffffff' }">Max Distance (miles)</span>
                                         <input id="distSlider" class="slider has-output-tooltip is-fullwidth" step="0.2" min="0.2" max="2" value="1" type="range">
                                         <span id="distOut">0.2</span>
                                     </div>
                                     <div class="dropdown-item">
-                                        <span :style="{'color': '#e23c52' }">Max Price (£)</span>
+                                        <span :style="{'color': '#ffffff' }">Max Price (£)</span>
                                         <input id="priceSlider" class="slider has-output-tooltip is-fullwidth" step="0.01" min="0" max="10" value="10" type="range">
                                         <span id="priceOut">10</span>
                                     </div>
                                     <div class="dropdown-item">
-                                        <span :style="{'color': '#e23c52' }">Crime importance</span>
+                                        <span :style="{'color': '#ffffff' }">Crime importance</span>
                                         <input id="crimeSlider" class="slider has-output-tooltip is-fullwidth" step="1" min="0" max="10" value="10" type="range">
                                         <span id="crimeOut">10</span>
                                     </div>
                                     <div class="dropdown-item">
-                                        <button class="button" @click="setDistance" :style="{'color': '#bdfff6', 'background-color': '#e23c52' }">Submit Filters</button>
+                                        <button class="button" @click="setDistance" :style="{'color': '#000000', 'background-color': '#ffffff' }">Submit Filters</button>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                 </div>
                     <div class="level-right">
                         <div class="level-item">
-                            <button class="button" v-on:click="listView = !listView" :style="{'background-color': '#bdfff6' }"><strong :style="{'color': '#e23c52' }">ToggleMap View</strong></button>
+                            <button class="button" v-on:click="listView = !listView" :style="{'background-color': '#000000' }"><strong :style="{'color': '#ffffff' }">ToggleMap View</strong></button>
                         </div>
                     </div>
                 </nav>
@@ -62,8 +62,8 @@
             <div v-show="listView">
                 <div class= "columns">
                     <div class="column is-12">
-                        <div class="box" :style="{'background-color': '#bdfff6' }">
-                            <div class="columns" :style="{'color': '#e23c52' }">
+                        <div class="box" :style="{'background-color': '#000000' }">
+                            <div class="columns" :style="{'color': '#ffffff' }">
                                 
                                     <div class="column">
                                         <h3 class="is-underlined has-text-weight-medium"> Parking Zone Name</h3>
@@ -98,8 +98,8 @@
                     class = "column is-12"
                     v-for="ParkingZone in parking"
                     v-bind:key="ParkingZone.id" >
-                    <div class="box"  :style="{'background-color': '#bdfff6' }">
-                        <div class = "columns is-multiline" :style="{'color': '#e23c52' }">
+                    <div class="box"  :style="{'background-color': '#000000' }">
+                        <div class = "columns is-multiline" :style="{'color': '#ffffff' }">
                             <div class = "column">
                                 <h3 class="is-size-4">{{ParkingZone.name}}</h3>
                             </div>
@@ -119,7 +119,7 @@
                             </div>
                             
                             <div class = "column">
-                                <router-link v-bind:to="ParkingZone.name" class="button mt-4" :style="{'background-color': '#e23c52', 'color': '#bdfff6' }">View details</router-link>
+                                <router-link v-bind:to="ParkingZone.name" class="button mt-4" :style="{'background-color': '#ffffff', 'color': '#000000' }">View details</router-link>
                             </div>
                             <div class = "column"  :style="{'background-color': getOverallColour(ParkingZone.name) }">
                                 <p class="is-size-6 has-text-black">{{ParkingZone.overallRate.toFixed(2)}} </p>
@@ -134,7 +134,7 @@
     </transition>
     <transition name="fade">
         <div v-show="!listView">
-            <div id="map2" ref="maps" style="width:700px; height:500px; margin-left:80px;">
+            <div id="map2" ref="maps" style="height:800px; margin-left:80px; margin-right:80px;">
                 This is a map
             </div>
         </div>
@@ -245,14 +245,14 @@
                     })
                 //create actual map
                 const map = new google.maps.Map(document.getElementById('map2'), {
-                    center: { lat: parseFloat(this.locationLatLong[0].long), lng: parseFloat(this.locationLatLong[0].lat) },
-                    zoom: 12
+                    center: { lat: parseFloat(this.locationLatLong[0].lat), lng: parseFloat(this.locationLatLong[0].long) },
+                    zoom: 15
                 });
                 //end create map
                 
                 //location marker
                 const Locmarker = new google.maps.Marker({
-                    position: { lat: parseFloat(this.locationLatLong[0].long), lng: parseFloat(this.locationLatLong[0].lat) },
+                    position: { lat: parseFloat(this.locationLatLong[0].lat), lng: parseFloat(this.locationLatLong[0].long) },
                     map: map,
                     title: this.locationLatLong[0].name
                 });
