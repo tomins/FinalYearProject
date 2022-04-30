@@ -16,8 +16,8 @@ def search(request):
     name = request.data.get('name','')
     name = name["address"]
     latlng = request.data.get('latlng','')
-    latlng =latlng.replace("(","")
-    latlng =latlng.replace(")","")
+    latlng = latlng.replace("(","")
+    latlng = latlng.replace(")","")
     lat = latlng.split(',')[0]
     long = latlng.split(',')[1]
     long = long.strip()

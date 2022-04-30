@@ -161,6 +161,7 @@
                 query: '',
                 latlng: '',
                 parking: [],
+                parkingProv: [],
                 crime: [],
                 locationLatLong: [],
                 distance: 1,
@@ -282,15 +283,16 @@
             },
             async performSearch(){
                 
+                this.parking = []
                 await axios
                     .post('/api/v1/location/search/', {
                         'query': this.query,
                         'distance': this.distance
                         })
                     .then(response => {
-                        this.parking = response.data
-                        for (let i = 0; i < this.parking.length; i++) {
-                           this.getCrime({ address: this.parking[i].name });
+                        this.parkingProv = response.data
+                        for (let i = 0; i < this.parkingProv.length; i++) {
+                           this.getCrime({ address: this.parkingProv[i].name });
                         }
                         this.setMarkers();
                         
@@ -299,6 +301,19 @@
                         console.log(error)
                     })
                 
+                for(var i = 0; i < this.parkingProv.length; i++){
+                    
+                    if(parseFloat(this.parkingProv[i].rates["price"][0].replace('£','')) <= parseFloat(this.price)){
+                        this.parking.push(this.parkingProv[i])
+                    }
+                    /*var x;
+                    console.log(this.crime[i])
+                    for(x = 0;x<this.crime.length;x++){
+                        console.log(this.crime[x].percentage)
+                        console.log(this.crime[i].percentage)
+                        
+                    }*/
+                }
                 
             },
             
@@ -314,12 +329,16 @@
                 }
                 if(this.price != priceSlider.value){
                     this.price = priceSlider.value;
-                    var i;
-                    for(i = 0;i<this.parking.length;i++){
-                        if(parseFloat(this.parking[i].rates["price"][0].replace('£','')) > this.price){
-                            this.parking.splice(i, 1);
+                    this.performSearch()
+                    /*var x;
+                    console.log("length : " + this.parking.length)
+                    for(var park of this.parking){
+                    //for(x = 0; x < this.parking.length ;x++){
+                        
+                        if(parseFloat(park.rates["price"][0].replace('£','')) > this.price){
+                            this.parking.splice(this.parking.indexOf(park), 1);
                         }
-                    }
+                    }*/
                 }
                 if(this.crimeFilter != crimeSlider.value){
                     this.crimeFilter = crimeSlider.value;
