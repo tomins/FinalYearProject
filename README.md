@@ -1,6 +1,6 @@
-#Instructions to run the project
+#Instructions to run the project#
 
-##Install npm
+Install npm
 ##Install python
 ##Clone the project and place into a folder
 ##Go onto the command line and get to the folder at the base of the repository
