@@ -154,13 +154,15 @@ export default{
         },
 
         bookingLink(name){
-            console.log("name" + name)
             const nm = name.split("Q-Park")
-            console.log(nm[1])
-            let n = nm[1].replace(" ", "-")
-            console.log(n)
-
-            return "https://www.q-park.co.uk/en-gb/cities/london/" + n
+            const nnn = nm[1].split(" ")
+            if(nnn[1].trim().length === 0){
+                return "https://www.q-park.co.uk/en-gb/cities/london/" + nnn[0]
+            }
+            else{
+                let n = nm[1].replace(" ", "-")
+                return "https://www.q-park.co.uk/en-gb/cities/london/" + n
+            }
         }
     }
 }

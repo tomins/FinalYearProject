@@ -93,7 +93,7 @@
                         </div>
                     </div>    
                 </div>
-                <div class="columns is-multiline">
+                <div v-if="!this.parking.length < 1" class="columns is-multiline" >
                 <div
                     class = "column is-12"
                     v-for="ParkingZone in parking"
@@ -128,6 +128,11 @@
                     </div>
                 </div>
                 
+            </div>
+            <div v-else>
+                <p class="is-size-3 has-text-justified has-text-weight-bold">
+                    There are no parking zones avaliable, please try a different location.
+                </p>
             </div>
         </div>
     

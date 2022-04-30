@@ -35,15 +35,21 @@ def newFavorite(request):
     q2 = query.split(",",1)[0]
     logging.info("new Favorite: " + q2)
     if query:
-        location = Location.objects.filter(
+        try:
+            loc = Location.objects.get(
                 address__contains = q2
-            )|Location.objects.get(
+            )
+        except Location.DoesNotExist:
+            loc = Location.objects.get(
                 name__contains = q2
             )
-    obj, park = FavoriteLocation.objects.get_or_create(
-        user = request.user,
-        location = location)
-    return HttpResponse(status=200)
+        #if(loc.count() >0):
+        #logging.info("the location has been found: " + loc['name'])
+        obj, park = FavoriteLocation.objects.get_or_create(
+            user = request.user,
+            location = loc)
+        return HttpResponse(status=200)
+        
 
 
 @api_view(['PUT'])

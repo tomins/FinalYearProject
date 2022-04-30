@@ -43,7 +43,7 @@ def create(request):
             name__contains = name
         )
     if(location.count() >0):
-        logging.info("the location has been found: " + location['name'])
+        #logging.info("the location has been found: " + location['name'])
         return HttpResponse(status=200)
     
     else:
@@ -146,8 +146,9 @@ def getParkingZoneQ():
             )|ParkingZone.objects.filter(
                 name__contains = nameA
             )
-            logging.info("the location has been found: " + nameA)
-            return HttpResponse(status=200)
+            if(parkingzone.count() >0):
+                logging.info("the location has been found: " + nameA)
+                return HttpResponse(status=200)
         except Location.DoesNotExist:    
             postcodeA = addressA.split("London",1)[1]
             postcodeA = postcodeA.split(" ",2)[1]
